@@ -1,0 +1,11 @@
+.venv
+TODO.txt
+.vscode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+build/
+dist/
+
