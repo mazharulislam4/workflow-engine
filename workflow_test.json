@@ -1,0 +1,230 @@
+{
+  "id": "parallel-test-workflow",
+  "name": "Parallel Execution Test with Conditions",
+  "version": "1.0.0",
+  "variables": {
+    "api1": "https://jsonplaceholder.typicode.com/posts/1",
+    "api2": "https://jsonplaceholder.typicode.com/posts/2",
+    "api3": "https://jsonplaceholder.typicode.com/posts/3",
+    "api4": "https://jsonplaceholder.typicode.com/users/1",
+    "success_threshold": 200
+  },
+  "nodes": [
+    {
+      "id": "start_1",
+      "type": "start",
+      "name": "Start Node",
+      "config": {}
+    },
+    {
+      "id": "http_1",
+      "type": "http_request",
+      "name": "Fetch API 1",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "error_handling": {
+          "continue_on_error": true,
+          "retry_count": 2,
+          "retry_delay": 1
+        }
+      }
+    },
+    {
+      "id": "http_2",
+      "type": "http_request",
+      "name": "Fetch API 2",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api2}}",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "error_handling": {
+          "continue_on_error": true,
+          "retry_count": 2,
+          "retry_delay": 1
+        }
+      }
+    },
+    {
+      "id": "http_3",
+      "type": "http_request",
+      "name": "Fetch API 3",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api3}}",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "error_handling": {
+          "continue_on_error": true,
+          "retry_count": 2,
+          "retry_delay": 1
+        }
+      }
+    },
+    {
+      "id": "condition_check_status",
+      "type": "condition",
+      "name": "Check HTTP Status",
+      "config": {
+        "expression": "{{steps.http_1.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "http_4",
+      "type": "http_request",
+      "name": "Fetch User Data (Success Path)",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api4}}",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "error_handling": {
+          "continue_on_error": true,
+          "retry_count": 1,
+          "retry_delay": 0.5
+        }
+      }
+    },
+    {
+      "id": "http_5",
+      "type": "http_request",
+      "name": "Fetch Fallback Data (Error Path)",
+      "config": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/users/2",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "error_handling": {
+          "continue_on_error": true
+        }
+      }
+    },
+    {
+      "id": "http_success",
+      "type": "http_request",
+      "name": "Log Success",
+      "config": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/posts/{{steps.http_4.outputs.result.id}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "http_failure",
+      "type": "http_request",
+      "name": "Log Failure",
+      "config": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/posts/999",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "error_handling": {
+          "continue_on_error": true
+        }
+      }
+    },
+    {
+      "id": "end_1",
+      "type": "end",
+      "name": "End Node",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "start_1",
+      "target": "http_1"
+    },
+    {
+      "source": "start_1",
+      "target": "http_2"
+    },
+    {
+      "source": "start_1",
+      "target": "http_3"
+    },
+    {
+      "source": "http_1",
+      "target": "condition_check_status",
+      "type": "success"
+    },
+    {
+      "source": "http_1",
+      "target": "http_5",
+      "type": "error"
+    },
+    {
+      "source": "http_2",
+      "target": "condition_check_status",
+      "type": "success"
+    },
+    {
+      "source": "http_2",
+      "target": "http_5",
+      "type": "error"
+    },
+    {
+      "source": "http_3",
+      "target": "condition_check_status",
+      "type": "success"
+    },
+    {
+      "source": "http_3",
+      "target": "http_5",
+      "type": "error"
+    },
+    {
+      "source": "condition_check_status",
+      "target": "http_4",
+      "condition": "true",
+      "type": "condition"
+    },
+    {
+      "source": "condition_check_status",
+      "target": "http_5",
+      "condition": "false",
+      "type": "condition"
+    },
+    {
+      "source": "http_4",
+      "target": "http_success",
+      "type": "success"
+    },
+    {
+      "source": "http_4",
+      "target": "http_failure",
+      "type": "error"
+    },
+    {
+      "source": "http_5",
+      "target": "http_failure",
+      "type": "success"
+    },
+    {
+      "source": "http_5",
+      "target": "end_1",
+      "type": "error"
+    },
+    {
+      "source": "http_success",
+      "target": "end_1",
+      "type": "success"
+    },
+    {
+      "source": "http_failure",
+      "target": "end_1",
+      "type": "success"
+    }
+  ]
+}

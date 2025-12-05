@@ -1,0 +1,15 @@
+1. Condition routing / and fork routing  --- DONE
+2. Create a utils that can find out all wanted edges like base type and current node_id  --- DONE
+
+3. Loop node
+4. Async Node
+5. Join Node
+
+6. Parallel Node
+7. Ansible Node
+8. Script Node
+9. Await or Timer Node
+
+10. Database Integration 
+11. Celery Integration
+12. Channel Integration

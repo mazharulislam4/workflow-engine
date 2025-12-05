@@ -1,0 +1,52 @@
+[
+  {
+    "node_type": "http_request",
+    "config": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "headers": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "body": {
+            "type": ["string", "object", "null"]
+          }
+        },
+        "required": ["method", "url"]
+      }
+    }
+  },
+  {
+    "node_type": "condition",
+    "config": {
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "expression": {
+            "type": "string"
+          }
+        },
+        "required": ["expression"]
+      }
+    }
+  },
+  {
+    "node_type": "start",
+    "config": {}
+  },
+  {
+    "node_type": "end",
+    "config": {}
+  }
+]

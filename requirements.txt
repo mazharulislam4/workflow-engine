@@ -1,0 +1,20 @@
+asgiref==3.11.0
+Django==5.2.9
+sqlparse==0.5.4
+tzdata==2025.2
+
+# PostgreSQL adapter
+psycopg2-binary==2.9.10
+
+# ASGI server and WebSocket support
+daphne==4.1.2
+channels==4.2.0
+channels-redis==4.2.1
+
+# Celery and Redis
+celery==5.4.0
+redis==5.2.1
+flower==2.0.1
+
+# Environment variables
+python-decouple==3.8
