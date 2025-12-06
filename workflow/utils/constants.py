@@ -9,6 +9,7 @@ VALID_NODE_TYPES = [
     "parallel",
     "join",
     "subworkflow",
+    "path",
     "http_request",
     "data_transform",
     "formation",

@@ -1,0 +1,418 @@
+{
+  "id": "parallel-workflow-test",
+  "name": "Complete Workflow Test - Fork, Loop, Condition, Parallel, Nested Fork",
+  "version": "4.0.0",
+  "config": {
+    "level_timeout": 3600
+  },
+  "variables": {
+    "user_ids": [1, 2, 3],
+    "api_base": "https://jsonplaceholder.typicode.com",
+    "enable_parallel": true,
+    "data_threshold": 5
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "name": "Start Workflow",
+      "config": {}
+    },
+    {
+      "id": "fetch_users",
+      "type": "http_request",
+      "name": "Fetch Users List",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/users",
+        "timeout": 30
+      }
+    },
+    {
+      "id": "check_users_exist",
+      "type": "condition",
+      "name": "Check If Users Exist",
+      "config": {
+        "expression": "{{steps.fetch_users.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "loop_process_users",
+      "type": "loop",
+      "name": "Process Each User",
+      "config": {
+        "items": [1, 2, 3],
+        "item_alias": "user_id",
+        "nodes": [
+          {
+            "id": "fetch_user_details",
+            "type": "http_request",
+            "name": "Fetch User Details",
+            "config": {
+              "method": "GET",
+              "url": "{{variables.api_base}}/users/1",
+              "timeout": 20
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "parallel_gateway",
+      "type": "parallel",
+      "name": "Parallel Gateway - Execute Multiple Operations",
+      "config": {
+        "wait_for_completion": true,
+        "timeout": 300,
+        "max_concurrent": 20
+      }
+    },
+    {
+      "id": "parallel_task_1",
+      "type": "http_request",
+      "name": "Parallel Task 1 - Fetch Posts",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts",
+        "timeout": 20
+      }
+    },
+    {
+      "id": "parallel_task_2",
+      "type": "http_request",
+      "name": "Parallel Task 2 - Fetch Comments",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/comments?postId=1",
+        "timeout": 20
+      }
+    },
+    {
+      "id": "parallel_task_3",
+      "type": "http_request",
+      "name": "Parallel Task 3 - Fetch Albums",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/albums",
+        "timeout": 20
+      }
+    },
+    {
+      "id": "fork_parallel_operations",
+      "type": "fork",
+      "name": "Fork - Multiple Paths",
+      "config": {
+        "mode": "thread",
+        "timeout": 300
+      }
+    },
+    {
+      "id": "path_fetch_posts",
+      "type": "path",
+      "name": "Path 1 - Posts Processing",
+      "config": {
+        "condition": "true",
+        "level_timeout": 300
+      }
+    },
+    {
+      "id": "path_fetch_comments",
+      "type": "path",
+      "name": "Path 2 - Comments Processing",
+      "config": {
+        "condition": "true",
+        "level_timeout": 300
+      }
+    },
+    {
+      "id": "nested_fork",
+      "type": "fork",
+      "name": "Nested Fork Inside Fork",
+      "config": {
+        "mode": "thread",
+        "timeout": 200
+      }
+    },
+    {
+      "id": "get_posts",
+      "type": "http_request",
+      "name": "Get Posts",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts",
+        "timeout": 30
+      }
+    },
+    {
+      "id": "check_posts_count",
+      "type": "condition",
+      "name": "Check Posts Count",
+      "config": {
+        "expression": "{{steps.get_posts.outputs.body | length}} > {{variables.data_threshold}}"
+      }
+    },
+    {
+      "id": "process_posts_success",
+      "type": "http_request",
+      "name": "Process Posts Success",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/1",
+        "timeout": 10
+      }
+    },
+    {
+      "id": "process_posts_fallback",
+      "type": "http_request",
+      "name": "Process Posts Fallback",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/2",
+        "timeout": 10
+      }
+    },
+    {
+      "id": "get_comments",
+      "type": "http_request",
+      "name": "Get Comments",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/comments?postId=1",
+        "timeout": 25
+      }
+    },
+    {
+      "id": "path_albums",
+      "type": "path",
+      "name": "Nested Path - Albums",
+      "config": {
+        "condition": "true",
+        "level_timeout": 150
+      }
+    },
+    {
+      "id": "path_photos",
+      "type": "path",
+      "name": "Nested Path - Photos",
+      "config": {
+        "condition": "true",
+        "level_timeout": 150
+      }
+    },
+    {
+      "id": "get_albums",
+      "type": "http_request",
+      "name": "Get Albums",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/albums",
+        "timeout": 30
+      }
+    },
+    {
+      "id": "get_photos",
+      "type": "http_request",
+      "name": "Get Photos",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/photos?albumId=1",
+        "timeout": 25
+      }
+    },
+    {
+      "id": "merge_results",
+      "type": "http_request",
+      "name": "Merge All Results",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/users/{{variables.user_ids[0]}}",
+        "timeout": 20
+      }
+    },
+    {
+      "id": "final_condition",
+      "type": "condition",
+      "name": "Final Status Check",
+      "config": {
+        "expression": "{{steps.merge_results.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "success_notification",
+      "type": "http_request",
+      "name": "Success Notification",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/1",
+        "timeout": 10
+      }
+    },
+    {
+      "id": "failure_notification",
+      "type": "http_request",
+      "name": "Failure Notification",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/2",
+        "timeout": 10
+      }
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "name": "End Workflow",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "start",
+      "target": "fetch_users"
+    },
+    {
+      "source": "fetch_users",
+      "target": "check_users_exist"
+    },
+    {
+      "source": "check_users_exist",
+      "target": "loop_process_users",
+      "type": "condition",
+      "condition": "true"
+    },
+    {
+      "source": "check_users_exist",
+      "target": "failure_notification",
+      "type": "condition",
+      "condition": "false"
+    },
+    {
+      "source": "loop_process_users",
+      "target": "parallel_gateway"
+    },
+    {
+      "source": "parallel_gateway",
+      "target": "parallel_task_1"
+    },
+    {
+      "source": "parallel_gateway",
+      "target": "parallel_task_2"
+    },
+    {
+      "source": "parallel_gateway",
+      "target": "parallel_task_3"
+    },
+    {
+      "source": "parallel_task_1",
+      "target": "fork_parallel_operations"
+    },
+    {
+      "source": "parallel_task_2",
+      "target": "fork_parallel_operations"
+    },
+    {
+      "source": "parallel_task_3",
+      "target": "fork_parallel_operations"
+    },
+    {
+      "source": "fork_parallel_operations",
+      "target": "path_fetch_posts",
+      "type": "fork-branch"
+    },
+    {
+      "source": "fork_parallel_operations",
+      "target": "path_fetch_comments",
+      "type": "fork-branch"
+    },
+    {
+      "source": "fork_parallel_operations",
+      "target": "nested_fork",
+      "type": "fork-branch"
+    },
+    {
+      "source": "path_fetch_posts",
+      "target": "get_posts"
+    },
+    {
+      "source": "get_posts",
+      "target": "check_posts_count"
+    },
+    {
+      "source": "check_posts_count",
+      "target": "process_posts_success",
+      "type": "condition",
+      "condition": "true"
+    },
+    {
+      "source": "check_posts_count",
+      "target": "process_posts_fallback",
+      "type": "condition",
+      "condition": "false"
+    },
+    {
+      "source": "path_fetch_comments",
+      "target": "get_comments"
+    },
+    {
+      "source": "nested_fork",
+      "target": "path_albums",
+      "type": "fork-branch"
+    },
+    {
+      "source": "nested_fork",
+      "target": "path_photos",
+      "type": "fork-branch"
+    },
+    {
+      "source": "path_albums",
+      "target": "get_albums"
+    },
+    {
+      "source": "path_photos",
+      "target": "get_photos"
+    },
+    {
+      "source": "process_posts_success",
+      "target": "merge_results"
+    },
+    {
+      "source": "process_posts_fallback",
+      "target": "merge_results"
+    },
+    {
+      "source": "get_comments",
+      "target": "merge_results"
+    },
+    {
+      "source": "get_albums",
+      "target": "merge_results"
+    },
+    {
+      "source": "get_photos",
+      "target": "merge_results"
+    },
+    {
+      "source": "merge_results",
+      "target": "final_condition"
+    },
+    {
+      "source": "final_condition",
+      "target": "success_notification",
+      "type": "condition",
+      "condition": "true"
+    },
+    {
+      "source": "final_condition",
+      "target": "failure_notification",
+      "type": "condition",
+      "condition": "false"
+    },
+    {
+      "source": "success_notification",
+      "target": "end"
+    },
+    {
+      "source": "failure_notification",
+      "target": "end"
+    }
+  ]
+}

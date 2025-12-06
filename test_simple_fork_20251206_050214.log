@@ -1,0 +1,1408 @@
+2025-12-06 05:02:15 - workflow.executors.start - INFO - \U0001f680 Starting workflow execution at node: start
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_main]: Starting execution in thread mode
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_main]: Found 4 paths: ['path_success', 'path_fail', 'path_nested', 'path_skip']
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - fork node [fork_main] passed limit validation: 10 total nodes across 4 paths
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [path_success]
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_success]: Evaluating condition: True
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [path_fail]
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_fail]: Evaluating condition: True
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [path_nested]
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_nested]: Evaluating condition: True
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [path_skip]
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_skip]: Evaluating condition: False
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705 Path Node [path_success]: Condition True \u2192 True
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705 Path Node [path_fail]: Condition True \u2192 True
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [path_success]: Condition met, executing downstream nodes
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705 Path Node [path_nested]: Condition True \u2192 True
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [path_fail]: Condition met, executing downstream nodes
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u274c Path Node [path_skip]: Condition False \u2192 False
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_success condition TRUE - executing downstream 
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [path_nested]: Condition met, executing downstream nodes
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_fail condition TRUE - executing downstream 
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u23ed\ufe0f  Path Node [path_skip]: Condition not met, downstream nodes will be skipped
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_success executing 3 downstream nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_nested condition TRUE - executing downstream 
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_fail executing 1 downstream nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_success executing level 0 with 3 nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u2705 Completed path [path_skip]
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_nested executing 1 downstream nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_fail executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: success_http_2
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path path_nested executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: fail_http
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/2
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: success_http_3
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: fork_nested
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://httpstat.us/500
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: success_http_1
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/3
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_nested]: Starting execution in thread mode
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/1
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_nested]: Found 2 paths: ['nested_path_1', 'nested_path_2']
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - fork node [fork_nested] passed limit validation: 2 total nodes across 2 paths
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [nested_path_1]
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_1]: Evaluating condition: True
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_1]: Condition True \u2192 True
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_1]: Condition met, executing downstream nodes
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path nested_path_1 condition TRUE - executing downstream 
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path nested_path_1 executing 1 downstream nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path nested_path_1 executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_1
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/1
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [nested_path_2]
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_2]: Evaluating condition: True
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_2]: Condition True \u2192 True
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_2]: Condition met, executing downstream nodes
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path nested_path_2 condition TRUE - executing downstream 
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path nested_path_2 executing 1 downstream nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - Path nested_path_2 executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_2
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/2
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705  Completed downstream parallel node [success_http_3]
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u2705 Completed path [nested_path_1]
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705  Completed downstream parallel node [success_http_2]
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:15 - workflow.executors.path - INFO - \u2705  Completed downstream parallel node [success_http_1]
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u2705 Completed path [path_success]
+2025-12-06 05:02:15 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u2705 Completed path [nested_path_2]
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u2705 Fork Node [fork_nested]: Completed - 2/2 paths executed
+2025-12-06 05:02:15 - workflow.executors.fork - INFO - \u2705 Completed path [path_nested]
+2025-12-06 05:02:46 - workflow.executors.http_request - ERROR - \u274c HTTP Request Failed [unknown]: HTTPSConnectionPool(host='httpstat.us', port=443): Read timed out. (read timeout=30)
+2025-12-06 05:02:46 - workflow.executors.base - ERROR - Node fail_http execution failed after 1 attempts.
+2025-12-06 05:02:46 - workflow.executors.base - WARNING - Node fail_http failed but continuing due to continue_on_error: HTTPSConnectionPool(host='httpstat.us', port=443): Read timed out. (read timeout=30)
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \u2705 Completed path [path_fail]
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \u2705 Fork Node [fork_main]: Completed - 4/4 paths executed
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_success]: Evaluating condition: True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705 Path Node [path_success]: Condition True \u2192 True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_fail]: Evaluating condition: True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [path_success]: Condition met, executing downstream nodes
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_nested]: Evaluating condition: True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705 Path Node [path_fail]: Condition True \u2192 True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_success condition TRUE - executing downstream 
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [path_skip]: Evaluating condition: False
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705 Path Node [path_nested]: Condition True \u2192 True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [path_fail]: Condition met, executing downstream nodes
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_success executing 3 downstream nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.end - INFO - \U0001f3c1 Workflow execution completed at node: end
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u274c Path Node [path_skip]: Condition False \u2192 False
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [path_nested]: Condition met, executing downstream nodes
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_fail condition TRUE - executing downstream 
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_success executing level 0 with 3 nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u23ed\ufe0f  Path Node [path_skip]: Condition not met, downstream nodes will be skipped
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_nested condition TRUE - executing downstream 
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_fail executing 1 downstream nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_nested executing 1 downstream nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: success_http_2
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_fail executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path path_nested executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: success_http_3
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/2
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: fail_http
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: fork_nested
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: success_http_1
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/3
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://httpstat.us/500
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_nested]: Starting execution in thread mode
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/1
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_nested]: Found 2 paths: ['nested_path_1', 'nested_path_2']
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - fork node [fork_nested] passed limit validation: 2 total nodes across 2 paths
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [nested_path_1]
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_1]: Evaluating condition: True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_1]: Condition True \u2192 True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_1]: Condition met, executing downstream nodes
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path nested_path_1 condition TRUE - executing downstream 
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path nested_path_1 executing 1 downstream nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path nested_path_1 executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_1
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/1
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [nested_path_2]
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_2]: Evaluating condition: True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_2]: Condition True \u2192 True
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_2]: Condition met, executing downstream nodes
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path nested_path_2 condition TRUE - executing downstream 
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path nested_path_2 executing 1 downstream nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - Path nested_path_2 executing level 0 with 1 nodes in parallel
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_2
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/2
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705  Completed downstream parallel node [success_http_2]
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705  Completed downstream parallel node [success_http_3]
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \u2705 Completed path [nested_path_1]
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \u2705 Completed path [nested_path_2]
+2025-12-06 05:02:46 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:02:46 - workflow.executors.path - INFO - \u2705  Completed downstream parallel node [success_http_1]
+2025-12-06 05:02:46 - workflow.executors.fork - INFO - \u2705 Fork Node [fork_nested]: Completed - 2/2 paths executed
+2025-12-06 05:03:17 - workflow.executors.http_request - ERROR - \u274c HTTP Request Failed [unknown]: HTTPSConnectionPool(host='httpstat.us', port=443): Read timed out. (read timeout=30)
+2025-12-06 05:03:17 - workflow.executors.base - ERROR - Node fail_http execution failed after 1 attempts.
+2025-12-06 05:03:17 - workflow.executors.base - WARNING - Node fail_http failed but continuing due to continue_on_error: HTTPSConnectionPool(host='httpstat.us', port=443): Read timed out. (read timeout=30)
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/1
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/2
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/3
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://httpstat.us/500
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_nested]: Starting execution in thread mode
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - \U0001f500 Fork Node [fork_nested]: Found 2 paths: ['nested_path_1', 'nested_path_2']
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - fork node [fork_nested] passed limit validation: 2 total nodes across 2 paths
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/posts/1
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [nested_path_1]
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - \u27a1\ufe0f Executing path [nested_path_2]
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_1]: Evaluating condition: True
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_2]: Evaluating condition: True
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_1]: Condition True \u2192 True
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_2]: Condition True \u2192 True
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_1]: Condition met, executing downstream nodes
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_2]: Condition met, executing downstream nodes
+2025-12-06 05:03:17 - workflow.executors.path - INFO - Path nested_path_1 condition TRUE - executing downstream 
+2025-12-06 05:03:17 - workflow.executors.path - INFO - Path nested_path_2 condition TRUE - executing downstream 
+2025-12-06 05:03:17 - workflow.executors.path - INFO - Path nested_path_1 executing 1 downstream nodes in parallel
+2025-12-06 05:03:17 - workflow.executors.path - INFO - Path nested_path_2 executing 1 downstream nodes in parallel
+2025-12-06 05:03:17 - workflow.executors.path - INFO - Path nested_path_1 executing level 0 with 1 nodes in parallel
+2025-12-06 05:03:17 - workflow.executors.path - INFO - Path nested_path_2 executing level 0 with 1 nodes in parallel
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_1
+2025-12-06 05:03:17 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_2
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/1
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/2
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - \u2705 Completed path [nested_path_2]
+2025-12-06 05:03:17 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - \u2705 Completed path [nested_path_1]
+2025-12-06 05:03:17 - workflow.executors.fork - INFO - \u2705 Fork Node [fork_nested]: Completed - 2/2 paths executed
+2025-12-06 05:03:48 - workflow.executors.http_request - ERROR - \u274c HTTP Request Failed [unknown]: HTTPSConnectionPool(host='httpstat.us', port=443): Read timed out. (read timeout=30)
+2025-12-06 05:03:48 - workflow.executors.base - ERROR - Node fail_http execution failed after 1 attempts.
+2025-12-06 05:03:48 - workflow.executors.base - WARNING - Node fail_http failed but continuing due to continue_on_error: HTTPSConnectionPool(host='httpstat.us', port=443): Read timed out. (read timeout=30)
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_1]: Evaluating condition: True
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_1]: Condition True \u2192 True
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \U0001f6e4\ufe0f  Path Node [nested_path_2]: Evaluating condition: True
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_1]: Condition met, executing downstream nodes
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \u2705 Path Node [nested_path_2]: Condition True \u2192 True
+2025-12-06 05:03:48 - workflow.executors.path - INFO - Path nested_path_1 condition TRUE - executing downstream 
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \u27a1\ufe0f  Path Node [nested_path_2]: Condition met, executing downstream nodes
+2025-12-06 05:03:48 - workflow.executors.path - INFO - Path nested_path_1 executing 1 downstream nodes in parallel
+2025-12-06 05:03:48 - workflow.executors.path - INFO - Path nested_path_2 condition TRUE - executing downstream 
+2025-12-06 05:03:48 - workflow.executors.path - INFO - Path nested_path_1 executing level 0 with 1 nodes in parallel
+2025-12-06 05:03:48 - workflow.executors.path - INFO - Path nested_path_2 executing 1 downstream nodes in parallel
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_1
+2025-12-06 05:03:48 - workflow.executors.path - INFO - Path nested_path_2 executing level 0 with 1 nodes in parallel
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/1
+2025-12-06 05:03:48 - workflow.executors.path - INFO - \u27a1\ufe0f Executing downstream node: nested_http_2
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/2
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/1
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \U0001f310 HTTP Request [unknown]: GET https://jsonplaceholder.typicode.com/users/2
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+2025-12-06 05:03:48 - workflow.executors.http_request - INFO - \u2705 HTTP Response [unknown]: Status 200
+
+================================================================================
+ADVANCED FORK TEST
+================================================================================
+
+Test Features:
+  - Path 1: Success path with 3 parallel HTTP requests
+  - Path 2: Fail path (500 error)
+  - Path 3: Nested fork inside fork
+  - Path 4: Skipped path (condition=false)
+================================================================================
+
+Computed execution order: ['start', 'fork_main', 'path_success', 'path_fail', 'path_nested', 'path_skip', 'end', 'success_http_1', 'success_http_2', 'success_http_3', 'fail_http', 'fork_nested', 'skip_http', 'nested_path_1', 'nested_path_2', 'nested_http_1', 'nested_http_2']
+Executing workflow in 6 levels...
+
+--- Executing Level 0 with nodes: ['start'] ---
+Executing node start of type start
+
+--- Executing Level 1 with nodes: ['fork_main'] ---
+Executing node fork_main of type fork
+
+--- Executing Level 2 with nodes: ['path_success', 'path_fail', 'path_nested', 'path_skip', 'end'] ---
+Executing node path_success of type path
+Executing node path_fail of type path
+Executing node path_nested of type path
+Executing node path_skip of type path
+Executing node end of type end
+
+--- Executing Level 3 with nodes: ['success_http_1', 'success_http_2', 'success_http_3', 'fail_http', 'fork_nested', 'skip_http'] ---
+Executing node success_http_1 of type http_request
+Executing node success_http_2 of type http_request
+Executing node success_http_3 of type http_request
+Executing node fail_http of type http_request
+Executing node fork_nested of type fork
+Executing node skip_http of type http_request
+
+--- Executing Level 4 with nodes: ['nested_path_1', 'nested_path_2'] ---
+Executing node nested_path_1 of type path
+Executing node nested_path_2 of type path
+
+--- Executing Level 5 with nodes: ['nested_http_1', 'nested_http_2'] ---
+Executing node nested_http_1 of type http_request
+Executing node nested_http_2 of type http_request
+Workflow completed at: 2025-12-05 23:03:48.857939+00:00
+
+================================================================================
+WORKFLOW RESULT:
+================================================================================
+{
+  "status": "completed",
+  "execution_order": [
+    "start",
+    "fork_main",
+    "path_success",
+    "path_fail",
+    "path_nested",
+    "path_skip",
+    "end",
+    "success_http_1",
+    "success_http_2",
+    "success_http_3",
+    "fail_http",
+    "fork_nested",
+    "skip_http",
+    "nested_path_1",
+    "nested_path_2",
+    "nested_http_1",
+    "nested_http_2"
+  ]
+}
+
+================================================================================
+COMPLETE CONTEXT DATA:
+================================================================================
+{
+  "variables": {
+    "api1": "https://jsonplaceholder.typicode.com/posts/1",
+    "api2": "https://jsonplaceholder.typicode.com/posts/2",
+    "api3": "https://jsonplaceholder.typicode.com/posts/3",
+    "api4": "https://jsonplaceholder.typicode.com/users/1",
+    "api5": "https://jsonplaceholder.typicode.com/users/2",
+    "invalid_url": "https://httpstat.us/500"
+  },
+  "steps": {
+    "start": {
+      "inputs": {
+        "id": "start",
+        "type": "start",
+        "name": "Start",
+        "config": {},
+        "node_id": "start",
+        "node_type": "start"
+      },
+      "outputs": {},
+      "options": {}
+    },
+    "path_success": {
+      "inputs": {
+        "id": "path_success",
+        "type": "path",
+        "name": "Success Path",
+        "config": {
+          "condition": true
+        },
+        "node_id": "path_success",
+        "node_type": "path"
+      },
+      "outputs": {
+        "condition_met": true,
+        "condition": true
+      },
+      "options": {}
+    },
+    "path_fail": {
+      "inputs": {
+        "id": "path_fail",
+        "type": "path",
+        "name": "Fail Path",
+        "config": {
+          "condition": true
+        },
+        "node_id": "path_fail",
+        "node_type": "path"
+      },
+      "outputs": {
+        "condition_met": true,
+        "condition": true
+      },
+      "options": {}
+    },
+    "path_nested": {
+      "inputs": {
+        "id": "path_nested",
+        "type": "path",
+        "name": "Nested Fork Path",
+        "config": {
+          "condition": true
+        },
+        "node_id": "path_nested",
+        "node_type": "path"
+      },
+      "outputs": {
+        "condition_met": true,
+        "condition": true
+      },
+      "options": {}
+    },
+    "path_skip": {
+      "inputs": {
+        "id": "path_skip",
+        "type": "path",
+        "name": "Skip Path",
+        "config": {
+          "condition": false
+        },
+        "node_id": "path_skip",
+        "node_type": "path"
+      },
+      "outputs": {
+        "condition_met": false,
+        "condition": false
+      },
+      "options": {}
+    },
+    "nested_path_1": {
+      "inputs": {
+        "id": "nested_path_1",
+        "type": "path",
+        "name": "Nested Path 1",
+        "config": {
+          "condition": true
+        },
+        "node_id": "nested_path_1",
+        "node_type": "path"
+      },
+      "outputs": {
+        "condition_met": true,
+        "condition": true
+      },
+      "options": {}
+    },
+    "nested_path_2": {
+      "inputs": {
+        "id": "nested_path_2",
+        "type": "path",
+        "name": "Nested Path 2",
+        "config": {
+          "condition": true
+        },
+        "node_id": "nested_path_2",
+        "node_type": "path"
+      },
+      "outputs": {
+        "condition_met": true,
+        "condition": true
+      },
+      "options": {}
+    },
+    "success_http_3": {
+      "inputs": {
+        "id": "success_http_3",
+        "type": "http_request",
+        "name": "Success HTTP 3",
+        "config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/posts/3",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "node_id": "success_http_3",
+        "node_type": "http_request"
+      },
+      "outputs": {
+        "status_code": 200,
+        "result": {
+          "userId": 1,
+          "id": 3,
+          "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+          "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
+        },
+        "headers": {
+          "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "keep-alive",
+          "access-control-allow-credentials": "true",
+          "Cache-Control": "max-age=43200",
+          "etag": "W/\"11b-USacuIw5a/iXAGdNKBvqr/TbMTc\"",
+          "expires": "-1",
+          "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+          "pragma": "no-cache",
+          "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=f%2Bywrq8NevVYqT4AWBTMvnm3xM4DEAkFQO9Ggd1RwJc%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764849598\"}],\"max_age\":3600}",
+          "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=f%2Bywrq8NevVYqT4AWBTMvnm3xM4DEAkFQO9Ggd1RwJc%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764849598\"",
+          "Server": "cloudflare",
+          "vary": "Origin, Accept-Encoding",
+          "via": "2.0 heroku-router",
+          "x-content-type-options": "nosniff",
+          "x-powered-by": "Express",
+          "x-ratelimit-limit": "1000",
+          "x-ratelimit-remaining": "969",
+          "x-ratelimit-reset": "1764849611",
+          "Age": "6689",
+          "cf-cache-status": "HIT",
+          "Content-Encoding": "gzip",
+          "CF-RAY": "9a972b956d3d8620-CGP",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        }
+      },
+      "options": {}
+    },
+    "nested_http_1": {
+      "inputs": {
+        "id": "nested_http_1",
+        "type": "http_request",
+        "name": "Nested HTTP 1",
+        "config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/users/1",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "node_id": "nested_http_1",
+        "node_type": "http_request"
+      },
+      "outputs": {
+        "status_code": 200,
+        "result": {
+          "id": 1,
+          "name": "Leanne Graham",
+          "username": "Bret",
+          "email": "Sincere@april.biz",
+          "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+              "lat": "-37.3159",
+              "lng": "81.1496"
+            }
+          },
+          "phone": "1-770-736-8031 x56442",
+          "website": "hildegard.org",
+          "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+          }
+        },
+        "headers": {
+          "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "keep-alive",
+          "access-control-allow-credentials": "true",
+          "Cache-Control": "max-age=43200",
+          "etag": "W/\"1fd-+2Y3G3w049iSZtw5t1mzSnunngE\"",
+          "expires": "-1",
+          "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+          "pragma": "no-cache",
+          "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852299\"}],\"max_age\":3600}",
+          "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852299\"",
+          "Server": "cloudflare",
+          "vary": "Origin, Accept-Encoding",
+          "via": "2.0 heroku-router",
+          "x-content-type-options": "nosniff",
+          "x-powered-by": "Express",
+          "x-ratelimit-limit": "1000",
+          "x-ratelimit-remaining": "965",
+          "x-ratelimit-reset": "1764852311",
+          "Age": "6688",
+          "cf-cache-status": "HIT",
+          "Content-Encoding": "gzip",
+          "CF-RAY": "9a972b956d5d7219-CGP",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        }
+      },
+      "options": {}
+    },
+    "success_http_2": {
+      "inputs": {
+        "id": "success_http_2",
+        "type": "http_request",
+        "name": "Success HTTP 2",
+        "config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/posts/2",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "node_id": "success_http_2",
+        "node_type": "http_request"
+      },
+      "outputs": {
+        "status_code": 200,
+        "result": {
+          "userId": 1,
+          "id": 2,
+          "title": "qui est esse",
+          "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+        },
+        "headers": {
+          "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "keep-alive",
+          "access-control-allow-credentials": "true",
+          "Cache-Control": "max-age=43200",
+          "etag": "W/\"116-jnDuMpjju89+9j7e0BqkdFsVRjs\"",
+          "expires": "-1",
+          "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+          "pragma": "no-cache",
+          "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=MS8jJSerc3XqfdKuhFJRIa5LFpd21HploWQZ4T6IwCI%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852006\"}],\"max_age\":3600}",
+          "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=MS8jJSerc3XqfdKuhFJRIa5LFpd21HploWQZ4T6IwCI%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852006\"",
+          "Server": "cloudflare",
+          "vary": "Origin, Accept-Encoding",
+          "via": "2.0 heroku-router",
+          "x-content-type-options": "nosniff",
+          "x-powered-by": "Express",
+          "x-ratelimit-limit": "1000",
+          "x-ratelimit-remaining": "971",
+          "x-ratelimit-reset": "1764852011",
+          "Age": "6689",
+          "cf-cache-status": "HIT",
+          "Content-Encoding": "gzip",
+          "CF-RAY": "9a972b957dfda721-CGP",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        }
+      },
+      "options": {}
+    },
+    "success_http_1": {
+      "inputs": {
+        "id": "success_http_1",
+        "type": "http_request",
+        "name": "Success HTTP 1",
+        "config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/posts/1",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "node_id": "success_http_1",
+        "node_type": "http_request"
+      },
+      "outputs": {
+        "status_code": 200,
+        "result": {
+          "userId": 1,
+          "id": 1,
+          "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+          "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        },
+        "headers": {
+          "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "keep-alive",
+          "access-control-allow-credentials": "true",
+          "Cache-Control": "max-age=43200",
+          "etag": "W/\"124-yiKdLzqO5gfBrJFrcdJ8Yq0LGnU\"",
+          "expires": "-1",
+          "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+          "pragma": "no-cache",
+          "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=5ltMjk37YDC2yzrLSAGsRiLFLI5UrG71u%2F9nFcpGPIM%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764860702\"}],\"max_age\":3600}",
+          "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=5ltMjk37YDC2yzrLSAGsRiLFLI5UrG71u%2F9nFcpGPIM%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764860702\"",
+          "Server": "cloudflare",
+          "vary": "Origin, Accept-Encoding",
+          "via": "2.0 heroku-router",
+          "x-content-type-options": "nosniff",
+          "x-powered-by": "Express",
+          "x-ratelimit-limit": "1000",
+          "x-ratelimit-remaining": "965",
+          "x-ratelimit-reset": "1764860711",
+          "Age": "19194",
+          "cf-cache-status": "HIT",
+          "Content-Encoding": "gzip",
+          "CF-RAY": "9a972b957aa1d4ac-CGP",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        }
+      },
+      "options": {}
+    },
+    "nested_http_2": {
+      "inputs": {
+        "id": "nested_http_2",
+        "type": "http_request",
+        "name": "Nested HTTP 2",
+        "config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/users/2",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "node_id": "nested_http_2",
+        "node_type": "http_request"
+      },
+      "outputs": {
+        "status_code": 200,
+        "result": {
+          "id": 2,
+          "name": "Ervin Howell",
+          "username": "Antonette",
+          "email": "Shanna@melissa.tv",
+          "address": {
+            "street": "Victor Plains",
+            "suite": "Suite 879",
+            "city": "Wisokyburgh",
+            "zipcode": "90566-7771",
+            "geo": {
+              "lat": "-43.9509",
+              "lng": "-34.4618"
+            }
+          },
+          "phone": "010-692-6593 x09125",
+          "website": "anastasia.net",
+          "company": {
+            "name": "Deckow-Crist",
+            "catchPhrase": "Proactive didactic contingency",
+            "bs": "synergize scalable supply-chains"
+          }
+        },
+        "headers": {
+          "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "keep-alive",
+          "access-control-allow-credentials": "true",
+          "Cache-Control": "max-age=43200",
+          "etag": "W/\"1fd-XTG63SYhaP/Uo6/vgmARnL3rpBk\"",
+          "expires": "-1",
+          "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+          "pragma": "no-cache",
+          "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852005\"}],\"max_age\":3600}",
+          "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852005\"",
+          "Server": "cloudflare",
+          "vary": "Origin, Accept-Encoding",
+          "via": "2.0 heroku-router",
+          "x-content-type-options": "nosniff",
+          "x-powered-by": "Express",
+          "x-ratelimit-limit": "1000",
+          "x-ratelimit-remaining": "972",
+          "x-ratelimit-reset": "1764852011",
+          "Age": "6250",
+          "cf-cache-status": "HIT",
+          "Content-Encoding": "gzip",
+          "CF-RAY": "9a972b959dcf3e7d-CGP",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        }
+      },
+      "options": {}
+    },
+    "fork_nested": {
+      "inputs": {
+        "id": "fork_nested",
+        "type": "fork",
+        "name": "Nested Fork",
+        "config": {
+          "execution_mode": "thread"
+        },
+        "node_id": "fork_nested",
+        "node_type": "fork"
+      },
+      "outputs": {
+        "type": "fork",
+        "total_paths": 2,
+        "paths_executed": 2,
+        "paths": {
+          "nested_path_1": {
+            "condition_met": true,
+            "nodes": {
+              "nested_http_1": {
+                "status": "success",
+                "output": {
+                  "status_code": 200,
+                  "result": {
+                    "id": 1,
+                    "name": "Leanne Graham",
+                    "username": "Bret",
+                    "email": "Sincere@april.biz",
+                    "address": {
+                      "street": "Kulas Light",
+                      "suite": "Apt. 556",
+                      "city": "Gwenborough",
+                      "zipcode": "92998-3874",
+                      "geo": {
+                        "lat": "-37.3159",
+                        "lng": "81.1496"
+                      }
+                    },
+                    "phone": "1-770-736-8031 x56442",
+                    "website": "hildegard.org",
+                    "company": {
+                      "name": "Romaguera-Crona",
+                      "catchPhrase": "Multi-layered client-server neural-net",
+                      "bs": "harness real-time e-markets"
+                    }
+                  },
+                  "headers": {
+                    "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Transfer-Encoding": "chunked",
+                    "Connection": "keep-alive",
+                    "access-control-allow-credentials": "true",
+                    "Cache-Control": "max-age=43200",
+                    "etag": "W/\"1fd-+2Y3G3w049iSZtw5t1mzSnunngE\"",
+                    "expires": "-1",
+                    "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                    "pragma": "no-cache",
+                    "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852299\"}],\"max_age\":3600}",
+                    "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852299\"",
+                    "Server": "cloudflare",
+                    "vary": "Origin, Accept-Encoding",
+                    "via": "2.0 heroku-router",
+                    "x-content-type-options": "nosniff",
+                    "x-powered-by": "Express",
+                    "x-ratelimit-limit": "1000",
+                    "x-ratelimit-remaining": "965",
+                    "x-ratelimit-reset": "1764852311",
+                    "Age": "6688",
+                    "cf-cache-status": "HIT",
+                    "Content-Encoding": "gzip",
+                    "CF-RAY": "9a972b956d5d7219-CGP",
+                    "alt-svc": "h3=\":443\"; ma=86400"
+                  }
+                }
+              }
+            },
+            "status": "success"
+          },
+          "nested_path_2": {
+            "condition_met": true,
+            "nodes": {
+              "nested_http_2": {
+                "status": "success",
+                "output": {
+                  "status_code": 200,
+                  "result": {
+                    "id": 2,
+                    "name": "Ervin Howell",
+                    "username": "Antonette",
+                    "email": "Shanna@melissa.tv",
+                    "address": {
+                      "street": "Victor Plains",
+                      "suite": "Suite 879",
+                      "city": "Wisokyburgh",
+                      "zipcode": "90566-7771",
+                      "geo": {
+                        "lat": "-43.9509",
+                        "lng": "-34.4618"
+                      }
+                    },
+                    "phone": "010-692-6593 x09125",
+                    "website": "anastasia.net",
+                    "company": {
+                      "name": "Deckow-Crist",
+                      "catchPhrase": "Proactive didactic contingency",
+                      "bs": "synergize scalable supply-chains"
+                    }
+                  },
+                  "headers": {
+                    "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Transfer-Encoding": "chunked",
+                    "Connection": "keep-alive",
+                    "access-control-allow-credentials": "true",
+                    "Cache-Control": "max-age=43200",
+                    "etag": "W/\"1fd-XTG63SYhaP/Uo6/vgmARnL3rpBk\"",
+                    "expires": "-1",
+                    "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                    "pragma": "no-cache",
+                    "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852005\"}],\"max_age\":3600}",
+                    "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852005\"",
+                    "Server": "cloudflare",
+                    "vary": "Origin, Accept-Encoding",
+                    "via": "2.0 heroku-router",
+                    "x-content-type-options": "nosniff",
+                    "x-powered-by": "Express",
+                    "x-ratelimit-limit": "1000",
+                    "x-ratelimit-remaining": "972",
+                    "x-ratelimit-reset": "1764852011",
+                    "Age": "6250",
+                    "cf-cache-status": "HIT",
+                    "Content-Encoding": "gzip",
+                    "CF-RAY": "9a972b959dcf3e7d-CGP",
+                    "alt-svc": "h3=\":443\"; ma=86400"
+                  }
+                }
+              }
+            },
+            "status": "success"
+          }
+        }
+      },
+      "options": {}
+    },
+    "fork_main": {
+      "inputs": {
+        "id": "fork_main",
+        "type": "fork",
+        "name": "Main Fork",
+        "config": {
+          "execution_mode": "thread"
+        },
+        "node_id": "fork_main",
+        "node_type": "fork"
+      },
+      "outputs": {
+        "type": "fork",
+        "total_paths": 4,
+        "paths_executed": 4,
+        "paths": {
+          "path_skip": {
+            "condition_met": true,
+            "nodes": {
+              "skip_http": {
+                "status": "success",
+                "output": {}
+              }
+            },
+            "status": "success"
+          },
+          "path_success": {
+            "condition_met": true,
+            "nodes": {
+              "success_http_2": {
+                "status": "success",
+                "output": {
+                  "status_code": 200,
+                  "result": {
+                    "userId": 1,
+                    "id": 2,
+                    "title": "qui est esse",
+                    "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
+                  },
+                  "headers": {
+                    "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Transfer-Encoding": "chunked",
+                    "Connection": "keep-alive",
+                    "access-control-allow-credentials": "true",
+                    "Cache-Control": "max-age=43200",
+                    "etag": "W/\"116-jnDuMpjju89+9j7e0BqkdFsVRjs\"",
+                    "expires": "-1",
+                    "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                    "pragma": "no-cache",
+                    "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=MS8jJSerc3XqfdKuhFJRIa5LFpd21HploWQZ4T6IwCI%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852006\"}],\"max_age\":3600}",
+                    "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=MS8jJSerc3XqfdKuhFJRIa5LFpd21HploWQZ4T6IwCI%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852006\"",
+                    "Server": "cloudflare",
+                    "vary": "Origin, Accept-Encoding",
+                    "via": "2.0 heroku-router",
+                    "x-content-type-options": "nosniff",
+                    "x-powered-by": "Express",
+                    "x-ratelimit-limit": "1000",
+                    "x-ratelimit-remaining": "971",
+                    "x-ratelimit-reset": "1764852011",
+                    "Age": "6689",
+                    "cf-cache-status": "HIT",
+                    "Content-Encoding": "gzip",
+                    "CF-RAY": "9a972b957dfda721-CGP",
+                    "alt-svc": "h3=\":443\"; ma=86400"
+                  }
+                }
+              },
+              "success_http_3": {
+                "status": "success",
+                "output": {
+                  "status_code": 200,
+                  "result": {
+                    "userId": 1,
+                    "id": 3,
+                    "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
+                    "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
+                  },
+                  "headers": {
+                    "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Transfer-Encoding": "chunked",
+                    "Connection": "keep-alive",
+                    "access-control-allow-credentials": "true",
+                    "Cache-Control": "max-age=43200",
+                    "etag": "W/\"11b-USacuIw5a/iXAGdNKBvqr/TbMTc\"",
+                    "expires": "-1",
+                    "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                    "pragma": "no-cache",
+                    "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=f%2Bywrq8NevVYqT4AWBTMvnm3xM4DEAkFQO9Ggd1RwJc%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764849598\"}],\"max_age\":3600}",
+                    "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=f%2Bywrq8NevVYqT4AWBTMvnm3xM4DEAkFQO9Ggd1RwJc%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764849598\"",
+                    "Server": "cloudflare",
+                    "vary": "Origin, Accept-Encoding",
+                    "via": "2.0 heroku-router",
+                    "x-content-type-options": "nosniff",
+                    "x-powered-by": "Express",
+                    "x-ratelimit-limit": "1000",
+                    "x-ratelimit-remaining": "969",
+                    "x-ratelimit-reset": "1764849611",
+                    "Age": "6689",
+                    "cf-cache-status": "HIT",
+                    "Content-Encoding": "gzip",
+                    "CF-RAY": "9a972b956d3d8620-CGP",
+                    "alt-svc": "h3=\":443\"; ma=86400"
+                  }
+                }
+              },
+              "success_http_1": {
+                "status": "success",
+                "output": {
+                  "status_code": 200,
+                  "result": {
+                    "userId": 1,
+                    "id": 1,
+                    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+                  },
+                  "headers": {
+                    "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Transfer-Encoding": "chunked",
+                    "Connection": "keep-alive",
+                    "access-control-allow-credentials": "true",
+                    "Cache-Control": "max-age=43200",
+                    "etag": "W/\"124-yiKdLzqO5gfBrJFrcdJ8Yq0LGnU\"",
+                    "expires": "-1",
+                    "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                    "pragma": "no-cache",
+                    "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=5ltMjk37YDC2yzrLSAGsRiLFLI5UrG71u%2F9nFcpGPIM%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764860702\"}],\"max_age\":3600}",
+                    "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=5ltMjk37YDC2yzrLSAGsRiLFLI5UrG71u%2F9nFcpGPIM%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764860702\"",
+                    "Server": "cloudflare",
+                    "vary": "Origin, Accept-Encoding",
+                    "via": "2.0 heroku-router",
+                    "x-content-type-options": "nosniff",
+                    "x-powered-by": "Express",
+                    "x-ratelimit-limit": "1000",
+                    "x-ratelimit-remaining": "965",
+                    "x-ratelimit-reset": "1764860711",
+                    "Age": "19194",
+                    "cf-cache-status": "HIT",
+                    "Content-Encoding": "gzip",
+                    "CF-RAY": "9a972b957aa1d4ac-CGP",
+                    "alt-svc": "h3=\":443\"; ma=86400"
+                  }
+                }
+              }
+            },
+            "status": "success"
+          },
+          "path_nested": {
+            "condition_met": true,
+            "nodes": {
+              "nested_http_2": {
+                "status": "success",
+                "output": {
+                  "status_code": 200,
+                  "result": {
+                    "id": 2,
+                    "name": "Ervin Howell",
+                    "username": "Antonette",
+                    "email": "Shanna@melissa.tv",
+                    "address": {
+                      "street": "Victor Plains",
+                      "suite": "Suite 879",
+                      "city": "Wisokyburgh",
+                      "zipcode": "90566-7771",
+                      "geo": {
+                        "lat": "-43.9509",
+                        "lng": "-34.4618"
+                      }
+                    },
+                    "phone": "010-692-6593 x09125",
+                    "website": "anastasia.net",
+                    "company": {
+                      "name": "Deckow-Crist",
+                      "catchPhrase": "Proactive didactic contingency",
+                      "bs": "synergize scalable supply-chains"
+                    }
+                  },
+                  "headers": {
+                    "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Transfer-Encoding": "chunked",
+                    "Connection": "keep-alive",
+                    "access-control-allow-credentials": "true",
+                    "Cache-Control": "max-age=43200",
+                    "etag": "W/\"1fd-XTG63SYhaP/Uo6/vgmARnL3rpBk\"",
+                    "expires": "-1",
+                    "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                    "pragma": "no-cache",
+                    "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852005\"}],\"max_age\":3600}",
+                    "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852005\"",
+                    "Server": "cloudflare",
+                    "vary": "Origin, Accept-Encoding",
+                    "via": "2.0 heroku-router",
+                    "x-content-type-options": "nosniff",
+                    "x-powered-by": "Express",
+                    "x-ratelimit-limit": "1000",
+                    "x-ratelimit-remaining": "972",
+                    "x-ratelimit-reset": "1764852011",
+                    "Age": "6250",
+                    "cf-cache-status": "HIT",
+                    "Content-Encoding": "gzip",
+                    "CF-RAY": "9a972b959dcf3e7d-CGP",
+                    "alt-svc": "h3=\":443\"; ma=86400"
+                  }
+                }
+              },
+              "fork_nested": {
+                "status": "success",
+                "output": {
+                  "type": "fork",
+                  "total_paths": 2,
+                  "paths_executed": 2,
+                  "paths": {
+                    "nested_path_1": {
+                      "condition_met": true,
+                      "nodes": {
+                        "nested_http_1": {
+                          "status": "success",
+                          "output": {
+                            "status_code": 200,
+                            "result": {
+                              "id": 1,
+                              "name": "Leanne Graham",
+                              "username": "Bret",
+                              "email": "Sincere@april.biz",
+                              "address": {
+                                "street": "Kulas Light",
+                                "suite": "Apt. 556",
+                                "city": "Gwenborough",
+                                "zipcode": "92998-3874",
+                                "geo": {
+                                  "lat": "-37.3159",
+                                  "lng": "81.1496"
+                                }
+                              },
+                              "phone": "1-770-736-8031 x56442",
+                              "website": "hildegard.org",
+                              "company": {
+                                "name": "Romaguera-Crona",
+                                "catchPhrase": "Multi-layered client-server neural-net",
+                                "bs": "harness real-time e-markets"
+                              }
+                            },
+                            "headers": {
+                              "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                              "Content-Type": "application/json; charset=utf-8",
+                              "Transfer-Encoding": "chunked",
+                              "Connection": "keep-alive",
+                              "access-control-allow-credentials": "true",
+                              "Cache-Control": "max-age=43200",
+                              "etag": "W/\"1fd-+2Y3G3w049iSZtw5t1mzSnunngE\"",
+                              "expires": "-1",
+                              "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                              "pragma": "no-cache",
+                              "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852299\"}],\"max_age\":3600}",
+                              "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852299\"",
+                              "Server": "cloudflare",
+                              "vary": "Origin, Accept-Encoding",
+                              "via": "2.0 heroku-router",
+                              "x-content-type-options": "nosniff",
+                              "x-powered-by": "Express",
+                              "x-ratelimit-limit": "1000",
+                              "x-ratelimit-remaining": "965",
+                              "x-ratelimit-reset": "1764852311",
+                              "Age": "6688",
+                              "cf-cache-status": "HIT",
+                              "Content-Encoding": "gzip",
+                              "CF-RAY": "9a972b956d5d7219-CGP",
+                              "alt-svc": "h3=\":443\"; ma=86400"
+                            }
+                          }
+                        }
+                      },
+                      "status": "success"
+                    },
+                    "nested_path_2": {
+                      "condition_met": true,
+                      "nodes": {
+                        "nested_http_2": {
+                          "status": "success",
+                          "output": {
+                            "status_code": 200,
+                            "result": {
+                              "id": 2,
+                              "name": "Ervin Howell",
+                              "username": "Antonette",
+                              "email": "Shanna@melissa.tv",
+                              "address": {
+                                "street": "Victor Plains",
+                                "suite": "Suite 879",
+                                "city": "Wisokyburgh",
+                                "zipcode": "90566-7771",
+                                "geo": {
+                                  "lat": "-43.9509",
+                                  "lng": "-34.4618"
+                                }
+                              },
+                              "phone": "010-692-6593 x09125",
+                              "website": "anastasia.net",
+                              "company": {
+                                "name": "Deckow-Crist",
+                                "catchPhrase": "Proactive didactic contingency",
+                                "bs": "synergize scalable supply-chains"
+                              }
+                            },
+                            "headers": {
+                              "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                              "Content-Type": "application/json; charset=utf-8",
+                              "Transfer-Encoding": "chunked",
+                              "Connection": "keep-alive",
+                              "access-control-allow-credentials": "true",
+                              "Cache-Control": "max-age=43200",
+                              "etag": "W/\"1fd-XTG63SYhaP/Uo6/vgmARnL3rpBk\"",
+                              "expires": "-1",
+                              "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                              "pragma": "no-cache",
+                              "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852005\"}],\"max_age\":3600}",
+                              "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=fXfKlyz1hu2RmSwgXjKDF7rgDtj9kkI69UohKDNt%2BwY%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852005\"",
+                              "Server": "cloudflare",
+                              "vary": "Origin, Accept-Encoding",
+                              "via": "2.0 heroku-router",
+                              "x-content-type-options": "nosniff",
+                              "x-powered-by": "Express",
+                              "x-ratelimit-limit": "1000",
+                              "x-ratelimit-remaining": "972",
+                              "x-ratelimit-reset": "1764852011",
+                              "Age": "6250",
+                              "cf-cache-status": "HIT",
+                              "Content-Encoding": "gzip",
+                              "CF-RAY": "9a972b959dcf3e7d-CGP",
+                              "alt-svc": "h3=\":443\"; ma=86400"
+                            }
+                          }
+                        }
+                      },
+                      "status": "success"
+                    }
+                  }
+                }
+              },
+              "nested_path_2": {
+                "status": "success",
+                "output": {
+                  "condition_met": true,
+                  "condition": true
+                }
+              },
+              "nested_http_1": {
+                "status": "success",
+                "output": {
+                  "status_code": 200,
+                  "result": {
+                    "id": 1,
+                    "name": "Leanne Graham",
+                    "username": "Bret",
+                    "email": "Sincere@april.biz",
+                    "address": {
+                      "street": "Kulas Light",
+                      "suite": "Apt. 556",
+                      "city": "Gwenborough",
+                      "zipcode": "92998-3874",
+                      "geo": {
+                        "lat": "-37.3159",
+                        "lng": "81.1496"
+                      }
+                    },
+                    "phone": "1-770-736-8031 x56442",
+                    "website": "hildegard.org",
+                    "company": {
+                      "name": "Romaguera-Crona",
+                      "catchPhrase": "Multi-layered client-server neural-net",
+                      "bs": "harness real-time e-markets"
+                    }
+                  },
+                  "headers": {
+                    "Date": "Fri, 05 Dec 2025 23:02:17 GMT",
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Transfer-Encoding": "chunked",
+                    "Connection": "keep-alive",
+                    "access-control-allow-credentials": "true",
+                    "Cache-Control": "max-age=43200",
+                    "etag": "W/\"1fd-+2Y3G3w049iSZtw5t1mzSnunngE\"",
+                    "expires": "-1",
+                    "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+                    "pragma": "no-cache",
+                    "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764852299\"}],\"max_age\":3600}",
+                    "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=4UJMNmGlJAsYfIKf2ELFJdu5Lx8v4EOckaiGraR8mJs%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764852299\"",
+                    "Server": "cloudflare",
+                    "vary": "Origin, Accept-Encoding",
+                    "via": "2.0 heroku-router",
+                    "x-content-type-options": "nosniff",
+                    "x-powered-by": "Express",
+                    "x-ratelimit-limit": "1000",
+                    "x-ratelimit-remaining": "965",
+                    "x-ratelimit-reset": "1764852311",
+                    "Age": "6688",
+                    "cf-cache-status": "HIT",
+                    "Content-Encoding": "gzip",
+                    "CF-RAY": "9a972b956d5d7219-CGP",
+                    "alt-svc": "h3=\":443\"; ma=86400"
+                  }
+                }
+              },
+              "nested_path_1": {
+                "status": "success",
+                "output": {
+                  "condition_met": true,
+                  "condition": true
+                }
+              }
+            },
+            "status": "success"
+          },
+          "path_fail": {
+            "condition_met": true,
+            "nodes": {
+              "fail_http": {
+                "status": "success",
+                "output": {}
+              }
+            },
+            "status": "success"
+          }
+        }
+      },
+      "options": {}
+    },
+    "end": {
+      "inputs": {
+        "id": "end",
+        "type": "end",
+        "name": "End",
+        "config": {},
+        "node_id": "end",
+        "node_type": "end"
+      },
+      "outputs": {},
+      "options": {}
+    },
+    "skip_http": {
+      "inputs": {
+        "id": "skip_http",
+        "type": "http_request",
+        "name": "Skip HTTP",
+        "config": {
+          "method": "GET",
+          "url": "https://jsonplaceholder.typicode.com/posts/1",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        "node_id": "skip_http",
+        "node_type": "http_request"
+      },
+      "outputs": {
+        "status_code": 200,
+        "result": {
+          "userId": 1,
+          "id": 1,
+          "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+          "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+        },
+        "headers": {
+          "Date": "Fri, 05 Dec 2025 23:03:19 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+          "Connection": "keep-alive",
+          "access-control-allow-credentials": "true",
+          "Cache-Control": "max-age=43200",
+          "etag": "W/\"124-yiKdLzqO5gfBrJFrcdJ8Yq0LGnU\"",
+          "expires": "-1",
+          "nel": "{\"report_to\":\"heroku-nel\",\"response_headers\":[\"Via\"],\"max_age\":3600,\"success_fraction\":0.01,\"failure_fraction\":0.1}",
+          "pragma": "no-cache",
+          "report-to": "{\"group\":\"heroku-nel\",\"endpoints\":[{\"url\":\"https://nel.heroku.com/reports?s=5ltMjk37YDC2yzrLSAGsRiLFLI5UrG71u%2F9nFcpGPIM%3D\\u0026sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d\\u0026ts=1764860702\"}],\"max_age\":3600}",
+          "reporting-endpoints": "heroku-nel=\"https://nel.heroku.com/reports?s=5ltMjk37YDC2yzrLSAGsRiLFLI5UrG71u%2F9nFcpGPIM%3D&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&ts=1764860702\"",
+          "Server": "cloudflare",
+          "vary": "Origin, Accept-Encoding",
+          "via": "2.0 heroku-router",
+          "x-content-type-options": "nosniff",
+          "x-powered-by": "Express",
+          "x-ratelimit-limit": "1000",
+          "x-ratelimit-remaining": "965",
+          "x-ratelimit-reset": "1764860711",
+          "Age": "19256",
+          "cf-cache-status": "HIT",
+          "Content-Encoding": "gzip",
+          "CF-RAY": "9a972d19ece00cfa-CGP",
+          "alt-svc": "h3=\":443\"; ma=86400"
+        }
+      },
+      "options": {}
+    }
+  },
+  "lookup": {},
+  "inputs": {},
+  "outputs": {},
+  "metadata": {
+    "run_id": "advanced-fork-001",
+    "started_at": "2025-12-05 23:02:15.036042+00:00",
+    "completed_at": "2025-12-05 23:03:48.857939+00:00"
+  },
+  "current": {},
+  "system": {
+    "timestamp": "2025-12-05T23:02:15.036076+00:00Z",
+    "timestamp_ms": 1764975735036,
+    "date": "2025-12-05",
+    "time": "23:02:15",
+    "uuid": "0a8941a3-c9e2-44d4-8842-96042dd0afee",
+    "run_id": "advanced-fork-001",
+    "workflow_id": "advanced-fork-test",
+    "workflow_name": "Advanced Fork Test with Success/Fail Paths",
+    "workflow_version": "1.0.0",
+    "user": "system",
+    "total_nodes": 17,
+    "total_edges": 16,
+    "execution_mode": "parallel",
+    "timezone": "UTC",
+    "created_at": "2025-12-05 23:02:15.036076+00:00",
+    "updated_at": "2025-12-05 23:02:15.036076+00:00"
+  }
+}
+
+================================================================================
+EXECUTION SUMMARY:
+================================================================================
+
+[SUCCESS] EXECUTED NODES (16):
+  - start
+  - fork_main
+  - path_success
+  - success_http_1
+  - success_http_2
+  - success_http_3
+  - path_fail
+  - path_nested
+  - fork_nested
+  - nested_path_1
+  - nested_http_1
+  - nested_path_2
+  - nested_http_2
+  - path_skip
+  - skip_http
+  - end
+
+[FAILED] FAILED NODES (0):
+  - None
+
+[SKIPPED] SKIPPED NODES (0):
+  - None
+
+================================================================================
+FORK EXECUTION DETAILS:
+================================================================================
+Traceback (most recent call last):
+  File "A:\vzure\wfm-clone\workflow-enterprise\test_simple_fork.py", line 268, in <module>
+    print(f"\n\U0001f4ca Main Fork:")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mazha\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\U0001f4ca' in position 2: character maps to <undefined>

@@ -31,8 +31,7 @@ class HTTPRequestExecutor(NodeExecutor):
             A dictionary containing the response status code and body.
         """
         config = inputs.get("config", {})
-        node = inputs.get("node", {})
-        node_id = node.get("node_id", "unknown")
+        node_id = inputs.get("node_id", "unknown")
 
         method = config.get("method", "GET").upper()
         url = config.get("url", "")
@@ -41,7 +40,7 @@ class HTTPRequestExecutor(NodeExecutor):
         body = config.get("body", None)
         content_type = headers.get("Content-Type", "application/json")
 
-        logger.info(f"🌐 HTTP Request [{node_id}]: {method} {url}")
+        logger.info(f"HTTP Request [{node_id}]: {method} {url}")
         logger.debug(
             f"HTTP Request Config:\n{json.dumps(config, indent=2, default=str)}"
         )
@@ -56,12 +55,21 @@ class HTTPRequestExecutor(NodeExecutor):
         if not url:
             raise ValueError("URL must be provided for HTTP request.")
 
+        # Get request-level timeout (separate from node execution timeout)
+        # This is the HTTP library timeout, not the executor timeout
+        request_timeout = config.get("request_timeout", 30)  # 30 seconds default
+
         try:
             response = requests.request(
-                method=method, url=url, headers=headers, params=params, json=body
+                method=method,
+                url=url,
+                headers=headers,
+                params=params,
+                json=body,
+                timeout=request_timeout,  # Add timeout to prevent hanging
             )
 
-            logger.info(f"✅ HTTP Response [{node_id}]: Status {response.status_code}")
+            logger.info(f"HTTP Response [{node_id}]: Status {response.status_code}")
             logger.debug(
                 f"Response Headers:\n{json.dumps(dict(response.headers), indent=2)}"
             )
@@ -93,5 +101,5 @@ class HTTPRequestExecutor(NodeExecutor):
                 "headers": dict(response.headers),
             }
         except requests.RequestException as e:
-            logger.error(f"❌ HTTP Request Failed [{node_id}]: {str(e)}")
+            logger.error(f"[FAIL] HTTP Request Failed [{node_id}]: {str(e)}")
             raise

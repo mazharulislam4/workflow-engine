@@ -38,11 +38,11 @@ def example_simple_workflow():
         {"source": "save", "target": "end"},
     ]
 
-    print("\nWorkflow: start → fetch_data → transform → save → end")
+    print("\nWorkflow: start -> fetch_data -> transform -> save -> end")
 
     # Topological sort
     order = topological_sort(nodes, edges)
-    print(f"\nExecution Order: {' → '.join(order)}")
+    print(f"\nExecution Order: {' -> '.join(order)}")
 
     # Parallel levels
     levels = get_parallel_levels(nodes, edges)
@@ -85,9 +85,9 @@ def example_parallel_api_calls():
     ]
 
     print("\nWorkflow:")
-    print("           ┌→ fetch_user ─┐")
-    print("  start ──→├→ fetch_orders ──→ join_data → process → end")
-    print("           └→ fetch_inventory ─┘")
+    print("           ┌-> fetch_user ─┐")
+    print("  start ──->├-> fetch_orders ──-> join_data -> process -> end")
+    print("           └-> fetch_inventory ─┘")
 
     # Parallel levels
     levels = get_parallel_levels(nodes, edges)
@@ -95,7 +95,7 @@ def example_parallel_api_calls():
     for i, level in enumerate(levels):
         print(f"  Level {i}: {level}")
         if i == 1:
-            print(f"           ↑ These {len(level)} API calls can run in parallel!")
+            print(f"           ^ These {len(level)} API calls can run in parallel!")
 
     # Dependency levels
     dep_levels = compute_dependency_levels(nodes, edges)
@@ -149,16 +149,16 @@ def example_complex_workflow():
     ]
 
     print("\nWorkflow:")
-    print("  start → validate_order ─┬→ check_inventory → reserve_items ─┐")
+    print("  start -> validate_order ─┬-> check_inventory -> reserve_items ─┐")
     print(
-        "                           └→ check_payment → charge_payment ──┴→ create_shipment"
+        "                           └-> check_payment -> charge_payment ──┴-> create_shipment"
     )
     print("                                                                        │")
     print(
         "                                                   ┌────────────────────┴─────────┐"
     )
     print(
-        "                                                   ↓                              ↓"
+        "                                                   v                              v"
     )
     print(
         "                                            send_confirmation              update_analytics"
@@ -167,13 +167,13 @@ def example_complex_workflow():
         "                                                   │                              │"
     )
     print(
-        "                                                   └──────────→ end ←─────────────┘"
+        "                                                   └──────────-> end <-─────────────┘"
     )
 
     # Topological sort
     order = topological_sort(nodes, edges)
     print(f"\nOne Valid Execution Order:")
-    print(f"  {' → '.join(order)}")
+    print(f"  {' -> '.join(order)}")
 
     # Parallel levels
     levels = get_parallel_levels(nodes, edges)
@@ -226,7 +226,7 @@ def example_diamond_pattern():
     print("  branch_a  branch_b")
     print("        ↘    ↙")
     print("         join")
-    print("           ↓")
+    print("           v")
     print("          end")
 
     # Dependency levels
@@ -272,13 +272,13 @@ def example_unequal_path_lengths():
     print("          start")
     print("        ↙      ↘")
     print("  fast_path   slow_step1")
-    print("      ↓             ↓")
+    print("      v             v")
     print("      │        slow_step2")
-    print("      │             ↓")
+    print("      │             v")
     print("      │        slow_step3")
-    print("      ↓             ↓")
+    print("      v             v")
     print("        join")
-    print("          ↓")
+    print("          v")
     print("         end")
 
     # Dependency levels
@@ -290,7 +290,7 @@ def example_unequal_path_lengths():
     print(f"\nKey Insight:")
     print(f"  - 'fast_path' completes at level 1")
     print(f"  - 'slow_step3' completes at level 4")
-    print(f"  - 'join' must wait for BOTH paths → Level {dep_levels['join']}")
+    print(f"  - 'join' must wait for BOTH paths -> Level {dep_levels['join']}")
     print(f"  - The SLOWEST path determines when 'join' can execute!")
 
 

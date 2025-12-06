@@ -1,0 +1,382 @@
+{
+  "id": "advanced-workflow-test",
+  "name": "Advanced Workflow Test - Fork, Loop, Condition, Parallel, Nested Fork",
+  "version": "3.0.0",
+  "config": {
+    "level_timeout": 3600
+  },
+  "variables": {
+    "user_ids": [1, 2, 3],
+    "api_base": "https://jsonplaceholder.typicode.com",
+    "enable_parallel_processing": true,
+    "enable_nested_fork": true,
+    "data_threshold": 5
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "name": "Start Workflow",
+      "config": {}
+    },
+    {
+      "id": "fetch_users",
+      "type": "http_request",
+      "name": "Fetch Users List",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/users",
+        "timeout": 30
+      }
+    },
+    {
+      "id": "check_users_exist",
+      "type": "condition",
+      "name": "Check If Users Exist",
+      "config": {
+        "expression": "{{steps.fetch_users.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "loop_process_users",
+      "type": "loop",
+      "name": "Process Each User",
+      "config": {
+        "items": [1, 2, 3],
+        "item_alias": "user_id",
+        "nodes": [
+          {
+            "id": "fetch_user_details",
+            "type": "http_request",
+            "name": "Fetch User Details",
+            "config": {
+              "method": "GET",
+              "url": "https://jsonplaceholder.typicode.com/users/1",
+              "timeout": 20
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "fork_parallel_operations",
+      "type": "fork",
+      "name": "Fork Parallel Data Processing",
+      "config": {
+        "wait_for_completion": true,
+        "max_workers": 5,
+        "timeout": 300,
+        "execution_mode": "thread"
+      }
+    },
+    {
+      "id": "path_fetch_posts",
+      "type": "path",
+      "name": "Path: Fetch Posts",
+      "config": {
+        "condition": "{{variables.enable_parallel_processing}}",
+        "level_timeout": 120
+      }
+    },
+    {
+      "id": "get_posts",
+      "type": "http_request",
+      "name": "Get All Posts",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts",
+        "timeout": 30
+      }
+    },
+    {
+      "id": "check_posts_count",
+      "type": "condition",
+      "name": "Check Posts Count",
+      "config": {
+        "expression": "{{steps.get_posts.outputs.result|length}} > {{variables.data_threshold}}"
+      }
+    },
+    {
+      "id": "process_posts_success",
+      "type": "http_request",
+      "name": "Process Posts (Many)",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/1",
+        "timeout": 15
+      }
+    },
+    {
+      "id": "process_posts_fallback",
+      "type": "http_request",
+      "name": "Process Posts (Few)",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/2",
+        "timeout": 15
+      }
+    },
+    {
+      "id": "path_fetch_comments",
+      "type": "path",
+      "name": "Path: Fetch Comments",
+      "config": {
+        "condition": "{{variables.enable_parallel_processing}}",
+        "level_timeout": 120
+      }
+    },
+    {
+      "id": "get_comments",
+      "type": "http_request",
+      "name": "Get All Comments",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/comments?postId=1",
+        "timeout": 30
+      }
+    },
+    {
+      "id": "nested_fork",
+      "type": "fork",
+      "name": "Nested Fork for Albums & Photos",
+      "config": {
+        "wait_for_completion": true,
+        "max_workers": 3,
+        "timeout": 200,
+        "execution_mode": "thread"
+      }
+    },
+    {
+      "id": "path_albums",
+      "type": "path",
+      "name": "Path: Process Albums",
+      "config": {
+        "condition": "{{variables.enable_nested_fork}}",
+        "level_timeout": 90
+      }
+    },
+    {
+      "id": "get_albums",
+      "type": "http_request",
+      "name": "Get Albums",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/albums",
+        "timeout": 25
+      }
+    },
+    {
+      "id": "loop_albums",
+      "type": "loop",
+      "name": "Loop Through First 3 Albums",
+      "config": {
+        "items": [1, 2, 3],
+        "item_alias": "album_id",
+        "nodes": [
+          {
+            "id": "fetch_album_detail",
+            "type": "http_request",
+            "name": "Fetch Album Detail",
+            "config": {
+              "method": "GET",
+              "url": "{{variables.api_base}}/albums/{{loop.item}}",
+              "timeout": 15
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "path_photos",
+      "type": "path",
+      "name": "Path: Process Photos",
+      "config": {
+        "condition": "{{variables.enable_nested_fork}}",
+        "level_timeout": 90
+      }
+    },
+    {
+      "id": "get_photos",
+      "type": "http_request",
+      "name": "Get Photos",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/photos?albumId=1",
+        "timeout": 25
+      }
+    },
+    {
+      "id": "join_fork_results",
+      "type": "join",
+      "name": "Join Fork Results",
+      "config": {
+        "source": "fork_parallel_operations",
+        "strategy": "merge",
+        "filter": null
+      }
+    },
+    {
+      "id": "merge_results",
+      "type": "http_request",
+      "name": "Merge All Results",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/users/{{variables.user_ids[0]}}",
+        "timeout": 20
+      }
+    },
+    {
+      "id": "final_condition",
+      "type": "condition",
+      "name": "Final Status Check",
+      "config": {
+        "expression": "{{steps.merge_results.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "success_notification",
+      "type": "http_request",
+      "name": "Success Notification",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/1",
+        "timeout": 10
+      }
+    },
+    {
+      "id": "failure_notification",
+      "type": "http_request",
+      "name": "Failure Notification",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_base}}/posts/2",
+        "timeout": 10
+      }
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "name": "End Workflow",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "start",
+      "target": "fetch_users"
+    },
+    {
+      "source": "fetch_users",
+      "target": "check_users_exist"
+    },
+    {
+      "source": "check_users_exist",
+      "target": "loop_process_users",
+      "type": "condition",
+      "condition": "true"
+    },
+    {
+      "source": "check_users_exist",
+      "target": "failure_notification",
+      "type": "condition",
+      "condition": "false"
+    },
+    {
+      "source": "loop_process_users",
+      "target": "fork_parallel_operations"
+    },
+    {
+      "source": "fork_parallel_operations",
+      "target": "path_fetch_posts",
+      "type": "fork-branch"
+    },
+    {
+      "source": "fork_parallel_operations",
+      "target": "path_fetch_comments",
+      "type": "fork-branch"
+    },
+    {
+      "source": "fork_parallel_operations",
+      "target": "nested_fork",
+      "type": "fork-branch"
+    },
+    {
+      "source": "path_fetch_posts",
+      "target": "get_posts"
+    },
+    {
+      "source": "get_posts",
+      "target": "check_posts_count"
+    },
+    {
+      "source": "check_posts_count",
+      "target": "process_posts_success",
+      "type": "condition",
+      "condition": "true"
+    },
+    {
+      "source": "check_posts_count",
+      "target": "process_posts_fallback",
+      "type": "condition",
+      "condition": "false"
+    },
+    {
+      "source": "path_fetch_comments",
+      "target": "get_comments"
+    },
+    {
+      "source": "nested_fork",
+      "target": "path_albums",
+      "type": "fork-branch"
+    },
+    {
+      "source": "nested_fork",
+      "target": "path_photos",
+      "type": "fork-branch"
+    },
+    {
+      "source": "path_albums",
+      "target": "get_albums"
+    },
+    {
+      "source": "get_albums",
+      "target": "loop_albums"
+    },
+    {
+      "source": "path_photos",
+      "target": "get_photos"
+    },
+    {
+      "source": "fork_parallel_operations",
+      "target": "join_fork_results"
+    },
+    {
+      "source": "join_fork_results",
+      "target": "merge_results"
+    },
+    {
+      "source": "merge_results",
+      "target": "final_condition"
+    },
+    {
+      "source": "final_condition",
+      "target": "success_notification",
+      "type": "condition",
+      "condition": "true"
+    },
+    {
+      "source": "final_condition",
+      "target": "failure_notification",
+      "type": "condition",
+      "condition": "false"
+    },
+    {
+      "source": "success_notification",
+      "target": "end"
+    },
+    {
+      "source": "failure_notification",
+      "target": "end"
+    }
+  ]
+}

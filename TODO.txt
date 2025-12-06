@@ -13,3 +13,6 @@
 10. Database Integration 
 11. Celery Integration
 12. Channel Integration
+
+13. Human in loop inside workflow
+14. Run job in background for fork and parallel next job doesn't need to wait

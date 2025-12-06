@@ -36,6 +36,6 @@ class EndNodeExecutor(NodeExecutor):
             Empty dictionary (no output)
         """
         node_id = inputs.get("node_id", "unknown")
-        logger.info(f"🏁 Workflow execution completed at node: {node_id}")
+        logger.info(f"Workflow completed at node: {node_id}")
         logger.debug(f"End node inputs: {json.dumps(inputs, indent=2, default=str)}")
         return {}

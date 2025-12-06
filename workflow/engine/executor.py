@@ -67,6 +67,13 @@ class WorkflowExecutor:
         self.coordinator = ExecutionCoordinator(run_id, self.variables)
         self.context = self.coordinator.context
         self._failed_node_id: Optional[str] = None  # Track which node failed
+        # Workflow-level timeout configuration (in seconds)
+        self.workflow_timeout = workflow_definition.get("config", {}).get(
+            "timeout", None
+        )
+        self.level_timeout = workflow_definition.get("config", {}).get(
+            "level_timeout", 86400
+        )  # 24 hours default for long-running datacenter operations
 
     def _initialize_coordinator(self):
         """
@@ -212,28 +219,41 @@ class WorkflowExecutor:
                 future = executor.submit(self._execute_single_node, node)
                 futures[future] = node_id
 
-            # wait for all futures to complete
-            for future in as_completed(futures):
-                node_id = futures[future]
-                try:
-                    future.result()  # Raises exception if node failed
-                    logger.debug(f"Node {node_id} completed successfully")
-                except Exception as e:
-                    # Exception already handled by _execute_single_node
-                    # We only re-raise if workflow should fail
-                    logger.error(f"Node {node_id} execution failed: {e}")
-                    node = nodes_dict[node_id]
+            # wait for all futures to complete with timeout
+            try:
+                for future in as_completed(futures, timeout=self.level_timeout):
+                    node_id = futures[future]
+                    try:
+                        future.result()  # Raises exception if node failed
+                        logger.debug(f"Node {node_id} completed successfully")
+                    except Exception as e:
+                        # Exception already handled by _execute_single_node
+                        # We only re-raise if workflow should fail
+                        logger.error(f"Node {node_id} execution failed: {e}")
+                        node = nodes_dict[node_id]
 
-                    if (
-                        not node.get("config", {})
-                        .get("error_handling", {})
-                        .get("continue_on_error", False)
-                    ):
-                        logger.error(f"Node {node_id} failed, workflow will fail")
-                        # Don't raise immediately - let other threads finish
-                        # The exception will be re-raised from _execute_single_node
-                    else:
-                        logger.warning(f"Node {node_id} failed but workflow continuing")
+                        if (
+                            not node.get("config", {})
+                            .get("error_handling", {})
+                            .get("continue_on_error", False)
+                        ):
+                            logger.error(f"Node {node_id} failed, workflow will fail")
+                            # Don't raise immediately - let other threads finish
+                            # The exception will be re-raised from _execute_single_node
+                        else:
+                            logger.warning(
+                                f"Node {node_id} failed but workflow continuing"
+                            )
+            except TimeoutError:
+                logger.error(
+                    f"Workflow level execution timeout ({self.level_timeout}s) exceeded"
+                )
+                # Cancel remaining futures
+                for future in futures:
+                    future.cancel()
+                raise TimeoutError(
+                    f"Workflow level execution timeout ({self.level_timeout}s) exceeded"
+                )
 
     def _execute_single_node(self, node: Dict[str, Any]):
         """

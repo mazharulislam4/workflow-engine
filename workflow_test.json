@@ -1,13 +1,22 @@
 {
-  "id": "parallel-test-workflow",
-  "name": "Parallel Execution Test with Conditions",
-  "version": "1.0.0",
+  "id": "comprehensive-workflow-test",
+  "name": "Comprehensive Workflow Test with Fork, Condition, and HTTP Requests",
+  "version": "2.0.0",
   "variables": {
     "api1": "https://jsonplaceholder.typicode.com/posts/1",
     "api2": "https://jsonplaceholder.typicode.com/posts/2",
     "api3": "https://jsonplaceholder.typicode.com/posts/3",
     "api4": "https://jsonplaceholder.typicode.com/users/1",
-    "success_threshold": 200
+    "api5": "https://jsonplaceholder.typicode.com/users/2",
+    "api6": "https://jsonplaceholder.typicode.com/users/3",
+    "api7": "https://jsonplaceholder.typicode.com/comments/1",
+    "api8": "https://jsonplaceholder.typicode.com/comments/2",
+    "api9": "https://jsonplaceholder.typicode.com/albums/1",
+    "api10": "https://jsonplaceholder.typicode.com/photos/1",
+    "success_threshold": 200,
+    "enable_fork_path_1": true,
+    "enable_fork_path_2": true,
+    "enable_nested_fork": true
   },
   "nodes": [
     {

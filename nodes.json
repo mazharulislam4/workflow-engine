@@ -2,7 +2,7 @@
   {
     "node_type": "http_request",
     "config": {
-      "inputSchema": {
+      "input_schema": {
         "type": "object",
         "properties": {
           "method": {
@@ -24,6 +24,17 @@
           }
         },
         "required": ["method", "url"]
+      },
+      "errorHandling": {
+        "retry": {
+          "max_retries": 3,
+          "delay_seconds": 5
+        },
+        "continue_on_error": true
+      },
+      "output_mapping": {
+        "status_code": "response.status_code",
+        "response_body": "response.body"
       }
     }
   },

@@ -1,0 +1,334 @@
+
+============================================================
+  ADVANCED WORKFLOW TEST
+============================================================
+Testing: Fork, Loop, Condition, Parallel, Nested Fork, Templates
+
+[*] Workflow Configuration:
+   - Name: Advanced Workflow Test - Fork, Loop, Condition, Parallel, Nested Fork
+   - Version: 3.0.0
+   - Total Nodes: 24
+   - Total Edges: 25
+   - Timeout: 3600s
+
+[*] Starting workflow execution...
+Computed execution order: ['start', 'fetch_users', 'check_users_exist', 'loop_process_users', 'fork_parallel_operations', 'path_fetch_posts', 'path_fetch_comments', 'nested_fork', 'join_fork_results', 'get_posts', 'get_comments', 'path_albums', 'path_photos', 'merge_results', 'check_posts_count', 'get_albums', 'get_photos', 'final_condition', 'process_posts_success', 'process_posts_fallback', 'loop_albums', 'success_notification', 'failure_notification', 'end']
+Executing workflow in 10 levels...
+
+--- Executing Level 0 with nodes: ['start'] ---
+Executing node start of type start
+
+--- Executing Level 1 with nodes: ['fetch_users'] ---
+Executing node fetch_users of type http_request
+  [http_request   ] HTTP Request [fetch_users]: GET https://jsonplaceholder.typicode.com/users
+  [http_request   ] HTTP Response [fetch_users]: Status 200
+
+--- Executing Level 2 with nodes: ['check_users_exist'] ---
+Executing node check_users_exist of type condition
+  [condition      ] Evaluating condition [check_users_exist]: 200 == 200
+  [condition      ] [OK] Condition result [check_users_exist]: True - Taking TRUE branch
+  [condition      ] [FORK] Branch routing [check_users_exist]: Taking TRUE branch -> ['loop_process_users']
+  [condition      ] [SKIP]  Skipping FALSE branch nodes: ['failure_notification']
+  [condition      ] Marking node failure_notification for skip (condition was True)
+  [condition      ] Condition check_users_exist evaluated to True, took TRUE branch
+
+--- Executing Level 3 with nodes: ['loop_process_users'] ---
+Executing node loop_process_users of type loop
+  [loop           ] Loop iteration [loop_process_users]: index=0, item=1
+  [http_request   ] HTTP Request [fetch_user_details]: GET https://jsonplaceholder.typicode.com/users/1
+  [http_request   ] HTTP Response [fetch_user_details]: Status 200
+  [loop           ] Loop iteration [loop_process_users]: index=1, item=2
+  [http_request   ] HTTP Request [fetch_user_details]: GET https://jsonplaceholder.typicode.com/users/1
+  [http_request   ] HTTP Response [fetch_user_details]: Status 200
+  [loop           ] Loop iteration [loop_process_users]: index=2, item=3
+  [http_request   ] HTTP Request [fetch_user_details]: GET https://jsonplaceholder.typicode.com/users/1
+  [http_request   ] HTTP Response [fetch_user_details]: Status 200
+
+--- Executing Level 4 with nodes: ['fork_parallel_operations'] ---
+Executing node fork_parallel_operations of type fork
+  [fork           ] [FORK] Fork Node [fork_parallel_operations]: Starting execution in thread mode
+  [fork           ] [FORK] Fork Node [fork_parallel_operations]: Found 3 paths: ['path_fetch_posts', 'path_fetch_comments', 'nested_fork']
+  [fork           ] fork node [fork_parallel_operations] passed limit validation: 10 total nodes across 3 paths
+  [fork           ] Executing path [path_fetch_posts]
+  [path           ] Path [path_fetch_posts]: Evaluating condition: True
+  [fork           ] Executing path [path_fetch_comments]
+  [path           ] [OK] Path Node [path_fetch_posts]: Condition True -> True
+  [path           ] Path [path_fetch_comments]: Evaluating condition: True
+  [path           ] ->  Path Node [path_fetch_posts]: Condition met, executing downstream nodes
+  [path           ] [OK] Path Node [path_fetch_comments]: Condition True -> True
+  [path           ] Path path_fetch_posts condition TRUE - executing downstream 
+  [fork           ] Executing path [nested_fork]
+  [path           ] ->  Path Node [path_fetch_comments]: Condition met, executing downstream nodes
+  [path           ] Path path_fetch_posts executing 4 downstream nodes in parallel
+  [path           ] Path path_fetch_comments condition TRUE - executing downstream 
+  [fork           ] [FORK] Fork Node [nested_fork]: Starting execution in thread mode
+  [path           ] Path path_fetch_posts executing level 0 with 1 nodes in parallel
+  [path           ] Path path_fetch_comments executing 1 downstream nodes in parallel
+  [fork           ] [FORK] Fork Node [nested_fork]: Found 2 paths: ['path_albums', 'path_photos']
+  [path           ] Executing downstream node: get_posts
+  [path           ] Path path_fetch_comments executing level 0 with 1 nodes in parallel
+  [fork           ] fork node [nested_fork] passed limit validation: 3 total nodes across 2 paths
+  [path           ] Executing downstream node: get_comments
+  [http_request   ] HTTP Request [get_posts]: GET https://jsonplaceholder.typicode.com/posts
+  [http_request   ] HTTP Request [get_comments]: GET https://jsonplaceholder.typicode.com/comments?postId=1
+  [fork           ] Executing path [path_albums]
+  [path           ] Path [path_albums]: Evaluating condition: True
+  [fork           ] Executing path [path_photos]
+  [path           ] [OK] Path Node [path_albums]: Condition True -> True
+  [path           ] Path [path_photos]: Evaluating condition: True
+  [path           ] ->  Path Node [path_albums]: Condition met, executing downstream nodes
+  [path           ] [OK] Path Node [path_photos]: Condition True -> True
+  [path           ] Path path_albums condition TRUE - executing downstream 
+  [path           ] ->  Path Node [path_photos]: Condition met, executing downstream nodes
+  [path           ] Path path_albums executing 2 downstream nodes in parallel
+  [path           ] Path path_photos condition TRUE - executing downstream 
+  [path           ] Path path_albums executing level 0 with 1 nodes in parallel
+  [path           ] Path path_photos executing 1 downstream nodes in parallel
+  [path           ] Executing downstream node: get_albums
+  [path           ] Path path_photos executing level 0 with 1 nodes in parallel
+  [path           ] Executing downstream node: get_photos
+  [http_request   ] HTTP Request [get_albums]: GET https://jsonplaceholder.typicode.com/albums
+  [http_request   ] HTTP Request [get_photos]: GET https://jsonplaceholder.typicode.com/photos?albumId=1
+  [http_request   ] HTTP Response [get_photos]: Status 200
+  [fork           ] Completed path [path_photos]
+  [http_request   ] HTTP Response [get_comments]: Status 200
+  [http_request   ] HTTP Response [get_albums]: Status 200
+  [fork           ] Completed path [path_fetch_comments]
+  [path           ] Path path_albums executing level 1 with 1 nodes in parallel
+  [path           ] Executing downstream node: loop_albums
+  [http_request   ] HTTP Response [get_posts]: Status 200
+  [path           ] Path path_fetch_posts executing level 1 with 1 nodes in parallel
+  [path           ] Executing downstream node: check_posts_count
+  [condition      ] Evaluating condition [check_posts_count]: 100 > 5
+  [condition      ] [OK] Condition result [check_posts_count]: True - Taking TRUE branch
+  [condition      ] [FORK] Branch routing [check_posts_count]: Taking TRUE branch -> ['process_posts_success']
+  [condition      ] [SKIP]  Skipping FALSE branch nodes: ['process_posts_fallback']
+  [condition      ] Marking node process_posts_fallback for skip (condition was True)
+  [condition      ] Condition check_posts_count evaluated to True, took TRUE branch
+  [path           ] Path path_fetch_posts executing level 2 with 2 nodes in parallel
+  [ERROR] Failed to evaluate expression: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [path           ] [SKIP] Node process_posts_fallback is marked as skipped, not executing. Reason: {'reason': 'condition_not_met', 'details': {'taken_branch': 'TRUE', 'condition_node': 'check_posts_count', 'condition_result': True, 'message': 'Condition evaluated to True, skipping FALSE branch'}}
+  [ERROR] Node loop_albums execution failed after 1 attempts.
+  [path           ] Executing downstream node: process_posts_success
+  [path           ] [OK]  Completed downstream parallel node [process_posts_fallback]
+  [http_request   ] HTTP Request [process_posts_success]: GET https://jsonplaceholder.typicode.com/posts/1
+  [ERROR] Node loop_albums failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] [FAIL] Error executing downstream node loop_albums: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node path_albums failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] [FAIL] Error executing path [path_albums]: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [fork           ] Completed path [path_albums]
+  [fork           ] [OK] Fork Node [nested_fork]: Completed - 1/2 paths executed
+  [fork           ] Completed path [nested_fork]
+  [http_request   ] HTTP Response [process_posts_success]: Status 200
+  [path           ] [OK]  Completed downstream parallel node [process_posts_success]
+  [fork           ] Completed path [path_fetch_posts]
+  [fork           ] [OK] Fork Node [fork_parallel_operations]: Completed - 3/3 paths executed
+
+--- Executing Level 5 with nodes: ['path_fetch_posts', 'path_fetch_comments', 'nested_fork', 'join_fork_results'] ---
+Executing node path_fetch_posts of type path
+  [path           ] Path [path_fetch_posts]: Evaluating condition: True
+  [path           ] [OK] Path Node [path_fetch_posts]: Condition True -> True
+Executing node path_fetch_comments of type path
+  [path           ] Path [path_fetch_comments]: Evaluating condition: True
+  [path           ] ->  Path Node [path_fetch_posts]: Condition met, executing downstream nodes
+Executing node nested_fork of type fork
+  [path           ] [OK] Path Node [path_fetch_comments]: Condition True -> True
+  [path           ] Path path_fetch_posts condition TRUE - executing downstream 
+  [path           ] ->  Path Node [path_fetch_comments]: Condition met, executing downstream nodes
+  [fork           ] [FORK] Fork Node [nested_fork]: Starting execution in thread mode
+Executing node join_fork_results of type join
+  [path           ] Path path_fetch_posts executing 4 downstream nodes in parallel
+  [path           ] Path path_fetch_comments condition TRUE - executing downstream 
+  [join           ] Join node [join_fork_results] joining from source [fork_parallel_operations]
+  [fork           ] [FORK] Fork Node [nested_fork]: Found 2 paths: ['path_albums', 'path_photos']
+  [path           ] Path path_fetch_posts executing level 0 with 1 nodes in parallel
+  [path           ] Path path_fetch_comments executing 1 downstream nodes in parallel
+  [join           ] Join join_fork_results: collected 3 results from fork_parallel_operations
+  [fork           ] fork node [nested_fork] passed limit validation: 3 total nodes across 2 paths
+  [path           ] Executing downstream node: get_posts
+  [path           ] Path path_fetch_comments executing level 0 with 1 nodes in parallel
+  [fork           ] Executing path [path_albums]
+  [path           ] Executing downstream node: get_comments
+  [path           ] Path [path_albums]: Evaluating condition: True
+  [fork           ] Executing path [path_photos]
+  [path           ] [OK] Path Node [path_albums]: Condition True -> True
+  [http_request   ] HTTP Request [get_posts]: GET https://jsonplaceholder.typicode.com/posts
+  [path           ] Path [path_photos]: Evaluating condition: True
+  [path           ] ->  Path Node [path_albums]: Condition met, executing downstream nodes
+  [http_request   ] HTTP Request [get_comments]: GET https://jsonplaceholder.typicode.com/comments?postId=1
+  [path           ] [OK] Path Node [path_photos]: Condition True -> True
+  [path           ] Path path_albums condition TRUE - executing downstream 
+  [path           ] ->  Path Node [path_photos]: Condition met, executing downstream nodes
+  [path           ] Path path_albums executing 2 downstream nodes in parallel
+  [path           ] Path path_photos condition TRUE - executing downstream 
+  [path           ] Path path_albums executing level 0 with 1 nodes in parallel
+  [path           ] Path path_photos executing 1 downstream nodes in parallel
+  [path           ] Executing downstream node: get_albums
+  [path           ] Path path_photos executing level 0 with 1 nodes in parallel
+  [path           ] Executing downstream node: get_photos
+  [http_request   ] HTTP Request [get_albums]: GET https://jsonplaceholder.typicode.com/albums
+  [http_request   ] HTTP Request [get_photos]: GET https://jsonplaceholder.typicode.com/photos?albumId=1
+  [http_request   ] HTTP Response [get_posts]: Status 200
+  [path           ] Path path_fetch_posts executing level 1 with 1 nodes in parallel
+  [path           ] Executing downstream node: check_posts_count
+  [condition      ] Evaluating condition [check_posts_count]: 100 > 5
+  [condition      ] [OK] Condition result [check_posts_count]: True - Taking TRUE branch
+  [condition      ] [FORK] Branch routing [check_posts_count]: Taking TRUE branch -> ['process_posts_success']
+  [condition      ] [SKIP]  Skipping FALSE branch nodes: ['process_posts_fallback']
+  [condition      ] Marking node process_posts_fallback for skip (condition was True)
+  [condition      ] Condition check_posts_count evaluated to True, took TRUE branch
+  [path           ] Path path_fetch_posts executing level 2 with 2 nodes in parallel
+  [http_request   ] HTTP Response [get_comments]: Status 200
+  [path           ] [SKIP] Node process_posts_fallback is marked as skipped, not executing. Reason: {'reason': 'condition_not_met', 'details': {'taken_branch': 'TRUE', 'condition_node': 'check_posts_count', 'condition_result': True, 'message': 'Condition evaluated to True, skipping FALSE branch'}}
+  [path           ] Executing downstream node: process_posts_success
+  [path           ] [OK]  Completed downstream parallel node [process_posts_fallback]
+  [http_request   ] HTTP Request [process_posts_success]: GET https://jsonplaceholder.typicode.com/posts/1
+  [http_request   ] HTTP Response [get_photos]: Status 200
+  [http_request   ] HTTP Response [get_albums]: Status 200
+  [fork           ] Completed path [path_photos]
+  [path           ] Path path_albums executing level 1 with 1 nodes in parallel
+  [path           ] Executing downstream node: loop_albums
+  [ERROR] Failed to evaluate expression: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node loop_albums execution failed after 1 attempts.
+  [ERROR] Node loop_albums failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] [FAIL] Error executing downstream node loop_albums: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node path_albums failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] [FAIL] Error executing path [path_albums]: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [fork           ] Completed path [path_albums]
+  [fork           ] [OK] Fork Node [nested_fork]: Completed - 1/2 paths executed
+  [http_request   ] HTTP Response [process_posts_success]: Status 200
+  [path           ] [OK]  Completed downstream parallel node [process_posts_success]
+
+--- Executing Level 6 with nodes: ['get_posts', 'get_comments', 'path_albums', 'path_photos', 'merge_results'] ---
+Executing node get_posts of type http_request
+Executing node get_comments of type http_request
+Executing node path_albums of type path
+  [path           ] Path [path_albums]: Evaluating condition: True
+  [path           ] [OK] Path Node [path_albums]: Condition True -> True
+  [path           ] ->  Path Node [path_albums]: Condition met, executing downstream nodes
+  [http_request   ] HTTP Request [get_comments]: GET https://jsonplaceholder.typicode.com/comments?postId=1
+  [path           ] Path path_albums condition TRUE - executing downstream 
+  [http_request   ] HTTP Request [get_posts]: GET https://jsonplaceholder.typicode.com/posts
+Executing node path_photos of type path
+  [path           ] Path path_albums executing 2 downstream nodes in parallel
+  [path           ] Path [path_photos]: Evaluating condition: True
+Executing node merge_results of type http_request
+  [path           ] Path path_albums executing level 0 with 1 nodes in parallel
+  [path           ] [OK] Path Node [path_photos]: Condition True -> True
+  [path           ] Executing downstream node: get_albums
+  [path           ] ->  Path Node [path_photos]: Condition met, executing downstream nodes
+  [http_request   ] HTTP Request [merge_results]: GET https://jsonplaceholder.typicode.com/users/1
+  [path           ] Path path_photos condition TRUE - executing downstream 
+  [http_request   ] HTTP Request [get_albums]: GET https://jsonplaceholder.typicode.com/albums
+  [path           ] Path path_photos executing 1 downstream nodes in parallel
+  [path           ] Path path_photos executing level 0 with 1 nodes in parallel
+  [path           ] Executing downstream node: get_photos
+  [http_request   ] HTTP Request [get_photos]: GET https://jsonplaceholder.typicode.com/photos?albumId=1
+  [http_request   ] HTTP Response [get_posts]: Status 200
+  [http_request   ] HTTP Response [merge_results]: Status 200
+  [http_request   ] HTTP Response [get_albums]: Status 200
+  [path           ] Path path_albums executing level 1 with 1 nodes in parallel
+  [path           ] Executing downstream node: loop_albums
+  [ERROR] Failed to evaluate expression: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node loop_albums execution failed after 1 attempts.
+  [http_request   ] HTTP Response [get_comments]: Status 200
+  [http_request   ] HTTP Response [get_photos]: Status 200
+  [ERROR] Node loop_albums failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] [FAIL] Error executing downstream node loop_albums: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node path_albums failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Workflow failed due to node path_albums: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node path_albums execution failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node path_albums failed, workflow will fail
+
+--- Executing Level 7 with nodes: ['check_posts_count', 'get_albums', 'get_photos', 'final_condition'] ---
+Executing node check_posts_count of type condition
+  [condition      ] Evaluating condition [check_posts_count]: 100 > 5
+  [condition      ] [OK] Condition result [check_posts_count]: True - Taking TRUE branch
+Executing node get_albums of type http_request
+  [condition      ] [FORK] Branch routing [check_posts_count]: Taking TRUE branch -> ['process_posts_success']
+  [condition      ] [SKIP]  Skipping FALSE branch nodes: ['process_posts_fallback']
+  [condition      ] Marking node process_posts_fallback for skip (condition was True)
+  [condition      ] Condition check_posts_count evaluated to True, took TRUE branch
+  [http_request   ] HTTP Request [get_albums]: GET https://jsonplaceholder.typicode.com/albums
+Executing node get_photos of type http_request
+Executing node final_condition of type condition
+  [condition      ] Evaluating condition [final_condition]: 200 == 200
+  [condition      ] [OK] Condition result [final_condition]: True - Taking TRUE branch
+  [condition      ] [FORK] Branch routing [final_condition]: Taking TRUE branch -> ['success_notification']
+  [http_request   ] HTTP Request [get_photos]: GET https://jsonplaceholder.typicode.com/photos?albumId=1
+  [condition      ] [SKIP]  Skipping FALSE branch nodes: ['failure_notification']
+  [condition      ] Marking node failure_notification for skip (condition was True)
+  [condition      ] Condition final_condition evaluated to True, took TRUE branch
+  [http_request   ] HTTP Response [get_photos]: Status 200
+  [http_request   ] HTTP Response [get_albums]: Status 200
+
+--- Executing Level 8 with nodes: ['process_posts_success', 'process_posts_fallback', 'loop_albums', 'success_notification', 'failure_notification'] ---
+Executing node process_posts_success of type http_request
+Executing node loop_albums of type loop
+  [ERROR] Failed to evaluate expression: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node loop_albums execution failed after 1 attempts.
+  [http_request   ] HTTP Request [process_posts_success]: GET https://jsonplaceholder.typicode.com/posts/1
+Executing node success_notification of type http_request
+  [http_request   ] HTTP Request [success_notification]: GET https://jsonplaceholder.typicode.com/posts/1
+  [ERROR] Node loop_albums failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Workflow failed due to node loop_albums: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node loop_albums execution failed: Template rendering error: Key 'item' not found. Available keys: []. Check your template syntax and key names (case-sensitive).
+  [ERROR] Node loop_albums failed, workflow will fail
+  [http_request   ] HTTP Response [success_notification]: Status 200
+  [http_request   ] HTTP Response [process_posts_success]: Status 200
+
+--- Executing Level 9 with nodes: ['end'] ---
+Executing node end of type end
+Workflow completed at: 2025-12-06 09:39:11.491938+00:00
+
+============================================================
+  EXECUTION RESULTS
+============================================================
+
+============================================================
+  [SUCCESS] WORKFLOW COMPLETED SUCCESSFULLY!
+============================================================
+
+[METRICS] Execution Statistics:
+   Nodes Executed:     22
+   Variables Used:     5
+   Loop Iterations:    3
+   Fork Paths:         3/3 executed
+   Nested Fork Paths:  1/2 executed
+
+[TEMPLATES] Template Variable Usage:
+   Variable substitution:    API returned status 200
+   Loop variables:           Used {{loop.item}} for iterations
+   Condition evaluation:     Posts count = 100
+   Cross-step references:    Used {{steps.*.outputs}}
+
+[FLOW] Execution Path:
+   start -> fetch_users -> check_users_exist -> ...
+   ... -> final_condition -> success_notification -> end
+
+[NODES] Executed Nodes by Type:
+   condition            : 3
+   end                  : 1
+   fork                 : 2
+   http_request         : 8
+   join                 : 1
+   loop                 : 1
+   path                 : 4
+   start                : 1
+
+============================================================
+  TEST SUMMARY
+============================================================
+
+[SUCCESS] All Features Tested:
+   [+] Fork                  - Parallel execution working
+   [+] Nested Fork           - Fork inside fork working
+   [+] Loop                  - Iteration with loop variables working
+   [+] Condition             - Branching logic working
+   [+] Parallel Execution    - Multiple paths working
+   [+] Template Variables    - Step-to-step data flow working
+
+============================================================
+  TEST COMPLETED SUCCESSFULLY!
+============================================================
+

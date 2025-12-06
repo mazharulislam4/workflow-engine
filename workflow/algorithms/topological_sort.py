@@ -85,13 +85,13 @@ def get_parallel_levels(
         List of levels, each level is a list of node IDs
 
     Example:
-        Input:  Start → A → B → End
-                       ↓
+        Input:  Start -> A -> B -> End
+                       v
                        C
         Output: [
             ['start'],
             ['a'],
-            ['b', 'c'],  ← Can run in parallel
+            ['b', 'c'],  <- Can run in parallel
             ['end']
         ]
     """

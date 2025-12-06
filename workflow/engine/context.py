@@ -21,6 +21,7 @@ class ContextManager:
             "lookup": {},
             # initial inputs
             "inputs": {},
+            "loop": {},
             # final outputs
             "outputs": {},
             "metadata": {},
@@ -220,6 +221,35 @@ class ContextManager:
             self.state["inputs"].clear()
         return self.state["inputs"]
 
+    # set loop
+    def set_loop(self, key: str, value: Any) -> Any:
+        """Set loop data."""
+        with self._lock:
+            self.state["loop"][key] = value
+        return self.state["loop"][key]
+
+    # get loop
+    def get_loop(self, key: Optional[str] = None) -> Any:
+        """Get loop data. If key is None, returns all loop data."""
+        with self._lock:
+            if key is None:
+                return deepcopy(self.state["loop"])
+            return self.state["loop"].get(key)
+
+    # update loop
+    def update_loop(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """Update loop data."""
+        with self._lock:
+            self.state["loop"].update(data)
+        return deepcopy(self.state["loop"])
+
+    # clear loop
+    def clear_loop(self) -> Dict[str, Any]:
+        """Clear all loop data."""
+        with self._lock:
+            self.state["loop"].clear()
+        return self.state["loop"]
+
     # set outputs
     def set_outputs(self, outputs: Dict[str, Any]) -> Dict[str, Any]:
         """Set final workflow outputs."""
@@ -349,6 +379,7 @@ class ContextManager:
             self.state["steps"].clear()
             self.state["lookup"].clear()
             self.state["inputs"].clear()
+            self.state["loop"].clear()
             self.state["outputs"].clear()
             self.state["metadata"].clear()
             self.state["current"].clear()
@@ -398,6 +429,22 @@ class ContextManager:
         except ValueError as e:
             logger.error(f"Failed to evaluate expression: {e}")
             raise
+
+    def get_all(self) -> Dict[str, Any]:
+        """
+        Get all context data including variables, steps, loop state, skipped nodes, etc.
+
+        Returns:
+            Dictionary containing complete context state
+        """
+        with self._lock:
+            # Get skipped nodes from internal storage
+            skipped_nodes = self._internal.get("skipped_nodes", {})
+
+            # Return state with skipped nodes added
+            result = deepcopy(self.state)
+            result["skipped_nodes"] = skipped_nodes
+            return result
 
 
 ContextManagerInstance = ContextManager()

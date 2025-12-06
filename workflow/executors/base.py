@@ -40,7 +40,9 @@ class NodeExecutor(ABC):
         self.variables = self.context.get_variable("variables")
         self.node_id = node.get("id", "")
         self.node_type = node.get("type", "")
-        self.node_config = node.get("config", {})
+        self.node_config = node.get(
+            "config", {}
+        )  # Will be overwritten with evaluated config
         self.workflow_instance = self.context.get_workflow_executor()
         self.edges = self.workflow_instance.edges or []
         self.nodes = self.workflow_instance.nodes or []
@@ -153,18 +155,23 @@ class NodeExecutor(ABC):
 
     def _execute_with_retries(self) -> Any:
         """
-        Execute node with retry logic.
+        Execute node with retry logic and timeout.
 
         Returns:
             Execution result
 
         Raises:
-            Exception: If all retries exhausted
+            Exception: If all retries exhausted or timeout exceeded
         """
+        from concurrent.futures import ThreadPoolExecutor
+        from concurrent.futures import TimeoutError as FuturesTimeoutError
 
         retry_config = self.node_config.get("retry", {})
         max_retries = retry_config.get("max_retries", 0)
         retry_delay = retry_config.get("delay_seconds", 0.3)  # in seconds
+        node_timeout = self.node_config.get(
+            "timeout", None
+        )  # Node-level timeout in seconds
 
         last_exception = None
 
@@ -175,9 +182,26 @@ class NodeExecutor(ABC):
                     f"Executing {self.node_id}, attempt {attempt + 1}/{max_retries + 1}"
                 )
 
-                # Execute the node
+                # Execute the node with timeout if configured
                 start_time = timezone.now()
-                result = self.execute_adapter()
+
+                if node_timeout:
+                    # Execute with timeout using ThreadPoolExecutor
+                    with ThreadPoolExecutor(max_workers=1) as executor:
+                        future = executor.submit(self.execute_adapter)
+                        try:
+                            result = future.result(timeout=node_timeout)
+                        except FuturesTimeoutError:
+                            logger.error(
+                                f"Node {self.node_id} execution timeout ({node_timeout}s) exceeded"
+                            )
+                            raise TimeoutError(
+                                f"Node {self.node_id} execution timeout ({node_timeout}s) exceeded"
+                            )
+                else:
+                    # Execute without timeout
+                    result = self.execute_adapter()
+
                 end_time = timezone.now()
 
                 # Record execution time
@@ -434,15 +458,14 @@ class NodeExecutor(ABC):
         Returns:
             Dictionary of inputs for execute()
         """
-        # Evaluate all expressions in config
-        evaluated_config = self.evaluate_config()
+        # Evaluate all expressions in config and overwrite node_config
+        self.node_config = self.evaluate_config()
 
         # Build inputs dictionary
         inputs = {}
         inputs.update(self.node)
         inputs.update({"node_id": self.node_id, "node_type": self.node_type})
-        inputs.update({"config": evaluated_config})
-
+        inputs.update({"config": self.node_config})
         # Allow subclasses to add custom inputs
         additional = self._get_additional_inputs()
         if additional:
@@ -494,7 +517,7 @@ class NodeExecutor(ABC):
         - NO coordinator access (use inputs parameter)
         - NO database operations
         - NO logging (return data for logging instead)
-        - Pure function: inputs → processing → outputs
+        - Pure function: inputs -> processing -> outputs
 
         Benefits:
         - 100% unit testable

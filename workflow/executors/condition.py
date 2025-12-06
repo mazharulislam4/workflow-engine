@@ -40,8 +40,7 @@ class ConditionNodeExecutor(NodeExecutor):
                 - "result": Boolean outcome of the condition.
         """
         config = inputs.get("config", {})
-        node = inputs.get("node", {})
-        node_id = node.get("node_id", "unknown")
+        node_id = inputs.get("node_id", "unknown")
         condition_expr = config.get("expression")
 
         if condition_expr is None:
@@ -49,7 +48,7 @@ class ConditionNodeExecutor(NodeExecutor):
                 "Condition expression is required for ConditionNodeExecutor."
             )
 
-        logger.info(f"🔀 Evaluating condition [{node_id}]: {condition_expr}")
+        logger.info(f"Evaluating condition [{node_id}]: {condition_expr}")
         logger.debug(f"Condition Config:\n{json.dumps(config, indent=2, default=str)}")
         from workflow.utils.node_utils import evaluate_condition
 
@@ -57,7 +56,7 @@ class ConditionNodeExecutor(NodeExecutor):
         result = evaluate_condition(condition_expr)
 
         logger.info(
-            f"{'✅' if result else '❌'} Condition result [{node_id}]: {result} - Taking {'TRUE' if result else 'FALSE'} branch"
+            f"{'[OK]' if result else '[FAIL]'} Condition result [{node_id}]: {result} - Taking {'TRUE' if result else 'FALSE'} branch"
         )
 
         return {"result": result}
@@ -116,12 +115,12 @@ class ConditionNodeExecutor(NodeExecutor):
             active_nodes = false_branch_nodes
 
         logger.info(
-            f"🔀 Branch routing [{self.node_id}]: Taking {taken_branch} branch → {active_nodes}"
+            f"[FORK] Branch routing [{self.node_id}]: Taking {taken_branch} branch -> {active_nodes}"
         )
 
         if node_to_skip:
             logger.info(
-                f"⏭️  Skipping {taken_branch == 'TRUE' and 'FALSE' or 'TRUE'} branch nodes: {node_to_skip}"
+                f"[SKIP]  Skipping {taken_branch == 'TRUE' and 'FALSE' or 'TRUE'} branch nodes: {node_to_skip}"
             )
 
         for node_id in node_to_skip:

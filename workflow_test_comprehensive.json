@@ -1,0 +1,395 @@
+{
+  "id": "comprehensive-workflow-test",
+  "name": "Comprehensive Workflow Test with Fork, Nested Fork, Condition, and HTTP Requests",
+  "version": "2.0.0",
+  "description": "Tests fork nodes, nested forks, parallel execution within forks, conditions, and error routing",
+  "variables": {
+    "api_posts_1": "https://jsonplaceholder.typicode.com/posts/1",
+    "api_posts_2": "https://jsonplaceholder.typicode.com/posts/2",
+    "api_posts_3": "https://jsonplaceholder.typicode.com/posts/3",
+    "api_users_1": "https://jsonplaceholder.typicode.com/users/1",
+    "api_users_2": "https://jsonplaceholder.typicode.com/users/2",
+    "api_users_3": "https://jsonplaceholder.typicode.com/users/3",
+    "api_comments_1": "https://jsonplaceholder.typicode.com/comments/1",
+    "api_comments_2": "https://jsonplaceholder.typicode.com/comments/2",
+    "api_albums_1": "https://jsonplaceholder.typicode.com/albums/1",
+    "api_photos_1": "https://jsonplaceholder.typicode.com/photos/1",
+    "success_threshold": 200
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "name": "Workflow Start",
+      "config": {}
+    },
+    {
+      "id": "initial_http",
+      "type": "http_request",
+      "name": "Initial HTTP Request",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_posts_1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "check_initial_status",
+      "type": "condition",
+      "name": "Check Initial HTTP Status",
+      "config": {
+        "expression": "{{steps.initial_http.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "fork_main",
+      "type": "fork",
+      "name": "Main Fork - Test Multiple Paths",
+      "config": {
+        "execution_mode": "thread",
+        "max_workers": 5
+      }
+    },
+    {
+      "id": "path_1",
+      "type": "path",
+      "name": "Path 1 - Simple HTTP Requests",
+      "config": {
+        "condition": true
+      }
+    },
+    {
+      "id": "path1_http_1",
+      "type": "http_request",
+      "name": "Path 1 - Fetch User 1",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_users_1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "path1_http_2",
+      "type": "http_request",
+      "name": "Path 1 - Fetch User 2",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_users_2}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "path_2",
+      "type": "path",
+      "name": "Path 2 - Parallel HTTP Requests",
+      "config": {
+        "condition": true
+      }
+    },
+    {
+      "id": "path2_http_1",
+      "type": "http_request",
+      "name": "Path 2 - Fetch Comment 1",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_comments_1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "path2_http_2",
+      "type": "http_request",
+      "name": "Path 2 - Fetch Comment 2",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_comments_2}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "path2_http_3",
+      "type": "http_request",
+      "name": "Path 2 - Fetch Album 1",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_albums_1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "path_3",
+      "type": "path",
+      "name": "Path 3 - Nested Fork Inside Path",
+      "config": {
+        "condition": true
+      }
+    },
+    {
+      "id": "nested_fork",
+      "type": "fork",
+      "name": "Nested Fork - Fork Inside Fork",
+      "config": {
+        "execution_mode": "thread",
+        "max_workers": 3
+      }
+    },
+    {
+      "id": "nested_path_1",
+      "type": "path",
+      "name": "Nested Path 1 - Photos",
+      "config": {
+        "condition": true
+      }
+    },
+    {
+      "id": "nested_path1_http_1",
+      "type": "http_request",
+      "name": "Nested - Fetch Photo 1",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_photos_1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "nested_path_2",
+      "type": "path",
+      "name": "Nested Path 2 - Posts with Condition",
+      "config": {
+        "condition": true
+      }
+    },
+    {
+      "id": "nested_path2_http_1",
+      "type": "http_request",
+      "name": "Nested - Fetch Post 2",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_posts_2}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "nested_path2_condition",
+      "type": "condition",
+      "name": "Nested - Check Post Status",
+      "config": {
+        "expression": "{{steps.nested_path2_http_1.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "nested_path2_http_success",
+      "type": "http_request",
+      "name": "Nested - Success Branch",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_posts_3}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "nested_path2_http_error",
+      "type": "http_request",
+      "name": "Nested - Error Branch",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_users_3}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "after_fork",
+      "type": "http_request",
+      "name": "After Fork - Aggregate Results",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_users_1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "final_condition",
+      "type": "condition",
+      "name": "Final Status Check",
+      "config": {
+        "expression": "{{steps.after_fork.outputs.status_code}} == 200"
+      }
+    },
+    {
+      "id": "success_path",
+      "type": "http_request",
+      "name": "Success Final Request",
+      "config": {
+        "method": "GET",
+        "url": "{{variables.api_posts_1}}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    },
+    {
+      "id": "error_path",
+      "type": "http_request",
+      "name": "Error Final Request",
+      "config": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/posts/999",
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "error_handling": {
+          "continue_on_error": true
+        }
+      }
+    },
+    {
+      "id": "end",
+      "type": "end",
+      "name": "Workflow End",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "start",
+      "target": "initial_http"
+    },
+    {
+      "source": "initial_http",
+      "target": "check_initial_status",
+      "type": "success"
+    },
+    {
+      "source": "check_initial_status",
+      "target": "fork_main",
+      "condition": "true"
+    },
+    {
+      "source": "check_initial_status",
+      "target": "error_path",
+      "condition": "false"
+    },
+    {
+      "source": "fork_main",
+      "target": "path_1",
+      "type": "fork-branch"
+    },
+    {
+      "source": "fork_main",
+      "target": "path_2",
+      "type": "fork-branch"
+    },
+    {
+      "source": "fork_main",
+      "target": "path_3",
+      "type": "fork-branch"
+    },
+    {
+      "source": "path_1",
+      "target": "path1_http_1"
+    },
+    {
+      "source": "path1_http_1",
+      "target": "path1_http_2"
+    },
+    {
+      "source": "path_2",
+      "target": "path2_http_1"
+    },
+    {
+      "source": "path_2",
+      "target": "path2_http_2"
+    },
+    {
+      "source": "path_2",
+      "target": "path2_http_3"
+    },
+    {
+      "source": "path_3",
+      "target": "nested_fork"
+    },
+    {
+      "source": "nested_fork",
+      "target": "nested_path_1",
+      "type": "fork-branch"
+    },
+    {
+      "source": "nested_fork",
+      "target": "nested_path_2",
+      "type": "fork-branch"
+    },
+    {
+      "source": "nested_path_1",
+      "target": "nested_path1_http_1"
+    },
+    {
+      "source": "nested_path_2",
+      "target": "nested_path2_http_1"
+    },
+    {
+      "source": "nested_path2_http_1",
+      "target": "nested_path2_condition"
+    },
+    {
+      "source": "nested_path2_condition",
+      "target": "nested_path2_http_success",
+      "condition": "true"
+    },
+    {
+      "source": "nested_path2_condition",
+      "target": "nested_path2_http_error",
+      "condition": "false"
+    },
+    {
+      "source": "fork_main",
+      "target": "after_fork"
+    },
+    {
+      "source": "after_fork",
+      "target": "final_condition",
+      "type": "success"
+    },
+    {
+      "source": "final_condition",
+      "target": "success_path",
+      "condition": "true"
+    },
+    {
+      "source": "final_condition",
+      "target": "error_path",
+      "condition": "false"
+    },
+    {
+      "source": "success_path",
+      "target": "end",
+      "type": "success"
+    },
+    {
+      "source": "error_path",
+      "target": "end",
+      "type": "success"
+    }
+  ]
+}
