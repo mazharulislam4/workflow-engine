@@ -12,7 +12,6 @@ Configuration:
 import logging
 from typing import Any, Dict
 
-import config
 from workflow.executors.base import NodeExecutor
 from workflow.executors.registry import register_executor
 

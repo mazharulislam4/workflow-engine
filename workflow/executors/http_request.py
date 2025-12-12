@@ -57,7 +57,7 @@ class HTTPRequestExecutor(NodeExecutor):
 
         # Get request-level timeout (separate from node execution timeout)
         # This is the HTTP library timeout, not the executor timeout
-        request_timeout = config.get("request_timeout", 30)  # 30 seconds default
+        request_timeout = config.get("timeout", 80)  # 30 seconds default
 
         try:
             response = requests.request(

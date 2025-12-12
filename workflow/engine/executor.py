@@ -21,7 +21,6 @@ import json
 import logging
 import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from os import error
 from typing import Any, Dict, List, Optional
 
 from django.utils import timezone

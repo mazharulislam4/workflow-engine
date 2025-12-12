@@ -6,14 +6,9 @@ Defines the interface that all node types must implement.
 """
 
 import logging
-import traceback
 from abc import ABC, abstractmethod
-from math import e
-from re import A, S
 from typing import Any, Dict, List, Optional, Tuple
-
 from django.utils import timezone
-
 from workflow.engine.context import ContextManager
 from workflow.engine.coordinator import ExecutionCoordinator
 
@@ -440,7 +435,6 @@ class NodeExecutor(ABC):
         Returns:
             Config with all expressions evaluated
         """
-        # TODO: with template engine
         return self.context.evaluate_expression(self.node_config)
 
     def _prepare_inputs(self) -> Dict[str, Any]:

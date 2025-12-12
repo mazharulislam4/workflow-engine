@@ -11,7 +11,6 @@ Pattern: Mediator + Observer
 import logging
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
-from xml.dom import Node
 
 from workflow.engine.context import ContextManager
 

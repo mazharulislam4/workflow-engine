@@ -1,0 +1,18 @@
+[
+  {
+    "source": "a",
+    "target": "b"
+  },
+  {
+    "source": "b",
+    "target": "c"
+  },
+  {
+    "source": "c",
+    "target": "d"
+  },
+  {
+    "source": "b",
+    "target": "e"
+  }
+]
